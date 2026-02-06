@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import it.bugboard26.bugboard.enums.IssueState;
+import it.bugboard26.bugboard.enums.IssueType;
+import it.bugboard26.bugboard.enums.Priority;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import it.bugboard26.bugboard.entities.Issue;
@@ -29,7 +32,7 @@ public class IssueService {
         return issueRepository.findById(issueUuid);
     }
 
-    public List<Issue> getIssuesByProject(Project project, String type, String priority, String status) { 
+    public List<Issue> getIssuesByProject(Project project, IssueType type, Priority priority, IssueState status) {
         Specification<Issue> spec = Specification.where(IssueSpecification.hasProjectUuid(project.getUuid()));
         spec = spec.and(IssueSpecification.hasType(type))
                    .and(IssueSpecification.hasStatus(status))

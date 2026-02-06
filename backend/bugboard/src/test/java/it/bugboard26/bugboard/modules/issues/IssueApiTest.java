@@ -1,27 +1,33 @@
 package it.bugboard26.bugboard.modules.issues;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.bugboard26.bugboard.auth.AuthInterceptor;
+import it.bugboard26.bugboard.entities.User;
+import it.bugboard26.bugboard.enums.IssueState;
+import it.bugboard26.bugboard.enums.IssueType;
+import it.bugboard26.bugboard.enums.Priority;
+import it.bugboard26.bugboard.modules.users.dtos.UserResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.server.ResponseStatusException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,337 +40,335 @@ import it.bugboard26.bugboard.modules.issues.dtos.IssueRequest;
 import it.bugboard26.bugboard.modules.issues.dtos.IssueResponse;
 import it.bugboard26.bugboard.modules.projects.ProjectService;
 import it.bugboard26.bugboard.modules.users.UserService;
-import it.bugboard26.bugboard.modules.users.dtos.UserResponse;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(IssueApi.class)
 class IssueApiTest {
 
-    @InjectMocks
-    private IssueApi issueApi;
+    @Autowired
+    private MockMvc mvc;
 
-    @Mock
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @MockitoBean
+    private AuthInterceptor authInterceptor;
+
+    @MockitoBean
     private Jwt jwt;
 
-    @Mock
+    @MockitoBean
     private IssueService issueService;
 
-    @Mock
+    @MockitoBean
     private UserService userService;
 
-    @Mock
+    @MockitoBean
     private ProjectService projectService;
 
+    String url = "/projects/{projectUuid}/issues";
+
+    @BeforeEach
+    void setup() throws Exception {
+        when(authInterceptor.preHandle(any(), any(), any())).thenReturn(true);
+    }
+
+
+    /* --------- Tests per GET --------- */
     @Test
     void getIssuesByProject_InvalidProjectUUID() throws Exception {
-        MockMvc mvc = MockMvcBuilders.standaloneSetup(issueApi).build();
-
-        String url = "/projects/{projectUuid}/issues";
         String invalidUUID = "invalid-uuid";
+
         mvc.perform(get(url, invalidUUID))
             .andExpect(status().isBadRequest());
 
-        verifyNoInteractions(issueService);
-        verifyNoInteractions(projectService);
-    }
-
-    @Test
-    void getIssuesByProject_NotFoundProjectUUID() {
-        UUID projectUUID = UUID.fromString("00000000-0000-0000-0000-000000000001");
-
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            issueApi.getIssuesByProject(projectUUID, "BUG", "LOW", "PENDING");
-        });
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
-    }
-
-    @Test
-    void getIssuesByProject_InvalidType() {
-        UUID projectUUID = UUID.randomUUID();
-        Project fakeProject = new Project();
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-        when(issueService.getIssuesByProject(fakeProject, "err", "LOW", null)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
-
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            issueApi.getIssuesByProject(projectUUID, "err", "LOW", null);
-        });
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-    }
-
-    @Test
-    void getIssuesByProject_InvalidPriority() {
-        UUID projectUUID = UUID.randomUUID();
-        Project fakeProject = new Project();
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-        when(issueService.getIssuesByProject(fakeProject, "BUG", "err", null)).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
-
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            issueApi.getIssuesByProject(projectUUID, "BUG", "err", null);
-        });
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-    }
-
-    @Test
-    void getIssuesByProject_InvalidState() {
-        UUID projectUUID = UUID.randomUUID();
-        Project fakeProject = new Project();
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-        when(issueService.getIssuesByProject(fakeProject, "BUG", "LOW", "err")).thenThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST));
-
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            issueApi.getIssuesByProject(projectUUID, "BUG", "LOW", "err");
-        });
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-    }
-
-    @Test
-    void getIssuesByProject_TC1() {
-        // ARRANGE
-        IssueServiceMock issueServiceMock = new IssueServiceMock();
-        List<IssueResponse> fakeIssueResponseList = issueServiceMock.issueResponseList;
-        UUID projectUUID = UUID.randomUUID();  
-        Project fakeProject = new Project();       
-        String type = "BUG";
-        String priority = "LOW";
-        String state = "TODO";
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-        when(issueService.getIssuesByProject(any(), any(), any(), any())).thenAnswer(
-            inv -> issueServiceMock.getIssuesByProject(
-                type,
-                priority,
-                state
-            )
-        );
-
-        when(issueService.enrichIssuesWithAuthors(any())).thenAnswer(
-            inv -> issueServiceMock.enrichIssuesWithAuthors(
-                type, 
-                priority,
-                state
-            )
-        );
-
-        // ACT
-        ResponseEntity<List<IssueResponse>> result = issueApi.getIssuesByProject(projectUUID, type, priority, state);
-        
-        // ASSERT    
-        assertAll(
-            () -> assertEquals(HttpStatus.OK, result.getStatusCode()),
-            () -> assertEquals(1, result.getBody().size()),
-            () -> assertEquals(fakeIssueResponseList.get(0), result.getBody().get(0))
-        );
-    }
-
-    @Test
-    void getIssuesByProject_TC2() {
-        // ARRANGE
-        IssueServiceMock issueServiceMock = new IssueServiceMock();
-        List<IssueResponse> fakeIssueResponseList = issueServiceMock.issueResponseList;
-        UUID projectUUID = UUID.randomUUID();         
-        Project fakeProject = new Project();       
-        String type = "QUESTION";
-        String priority = "MEDIUM";
-        String state = "PENDING";
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-
-        when(issueService.getIssuesByProject(any(), any(), any(), any())).thenAnswer(
-            inv -> issueServiceMock.getIssuesByProject(
-                type,
-                priority,
-                state
-            )
-        );
-
-        when(issueService.enrichIssuesWithAuthors(any())).thenAnswer(
-            inv -> issueServiceMock.enrichIssuesWithAuthors(
-                type, 
-                priority,
-                state
-            )
-        );
-
-        // ACT
-        ResponseEntity<List<IssueResponse>> result = issueApi.getIssuesByProject(projectUUID, type, priority, state);
-        
-        // ASSERT    
-        assertAll(
-            () -> assertEquals(HttpStatus.OK, result.getStatusCode()),
-            () -> assertEquals(1, result.getBody().size()),
-            () -> assertEquals(fakeIssueResponseList.get(1), result.getBody().get(0))
-        );
-    }
-
-    @Test
-    void getIssuesByProject_TC3() {
-        // ARRANGE
-        IssueServiceMock issueServiceMock = new IssueServiceMock();
-        List<IssueResponse> fakeIssueResponseList = issueServiceMock.issueResponseList;
-        UUID projectUUID = UUID.randomUUID();  
-        Project fakeProject = new Project();       
-
-        String type = "FEATURE";
-        String priority = "HIGH";
-        String state = "DONE";
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-
-        when(issueService.getIssuesByProject(any(), any(), any(), any())).thenAnswer(
-            inv -> issueServiceMock.getIssuesByProject(
-                type,
-                priority,
-                state
-            )
-        );
-
-        when(issueService.enrichIssuesWithAuthors(any())).thenAnswer(
-            inv -> issueServiceMock.enrichIssuesWithAuthors(
-                type, 
-                priority,
-                state
-            )
-        );
-
-        // ACT
-        ResponseEntity<List<IssueResponse>> result = issueApi.getIssuesByProject(projectUUID, type, priority, state);
-        
-        // ASSERT    
-        assertAll(
-            () -> assertEquals(HttpStatus.OK, result.getStatusCode()),
-            () -> assertEquals(1, result.getBody().size()),
-            () -> assertEquals(fakeIssueResponseList.get(2), result.getBody().get(0))
-        );
-    }
-
-    @Test
-    void getIssuesByProject_TC4() {
-        // ARRANGE
-        IssueServiceMock issueServiceMock = new IssueServiceMock();
-        List<IssueResponse> fakeIssueResponseList = issueServiceMock.issueResponseList;
-        UUID projectUUID = UUID.randomUUID();         
-        Project fakeProject = new Project();       
-        String type = "DOCUMENTATION";
-        String priority = null;
-        String state = null;
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-
-        when(issueService.getIssuesByProject(any(), any(), any(), any())).thenAnswer(
-            inv -> issueServiceMock.getIssuesByProject(
-                type,
-                priority,
-                state
-            )
-        );
-
-        when(issueService.enrichIssuesWithAuthors(any())).thenAnswer(
-            inv -> issueServiceMock.enrichIssuesWithAuthors(
-                type, 
-                priority,
-                state
-            )
-        );
-
-        // ACT
-        ResponseEntity<List<IssueResponse>> result = issueApi.getIssuesByProject(projectUUID, type, priority, state);
-        
-        // ASSERT    
-        assertAll(
-            () -> assertEquals(HttpStatus.OK, result.getStatusCode()),
-            () -> assertEquals(1, result.getBody().size()),
-            () -> assertEquals(fakeIssueResponseList.get(3), result.getBody().get(0))
-        );
-    }
-
-    @Test
-    void getIssuesByProject_TC5() {
-        // ARRANGE
-        IssueServiceMock issueServiceMock = new IssueServiceMock();
-        List<IssueResponse> fakeIssueResponseList = issueServiceMock.issueResponseList;
-        UUID projectUUID = UUID.randomUUID();         
-        Project fakeProject = new Project();
-        String type = null;
-        String priority = null;
-        String state = null;
-
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-
-        when(issueService.getIssuesByProject(any(), any(), any(), any())).thenAnswer(
-            inv -> issueServiceMock.getIssuesByProject(
-                type,
-                priority,
-                state
-            )
-        );
-
-        when(issueService.enrichIssuesWithAuthors(any())).thenAnswer(
-            inv -> issueServiceMock.enrichIssuesWithAuthors(
-                type, 
-                priority,
-                state
-            )
-        );
-
-        // ACT
-        ResponseEntity<List<IssueResponse>> result = issueApi.getIssuesByProject(projectUUID, type, priority, state);
-        
-        // ASSERT    
-        assertAll(
-            () -> assertEquals(HttpStatus.OK, result.getStatusCode()),
-            () -> assertEquals(4, result.getBody().size()),
-            () -> assertEquals(fakeIssueResponseList, result.getBody())
-        );
-    }
-
-    @Test
-    void postNewIssue_InvalidProjectUUID() throws Exception {
-        MockMvc mvc = MockMvcBuilders.standaloneSetup(issueApi).build();
-
-        String url = "/projects/{projectUuid}/issues";
-        String invalidUUID = "invalid-uuid";
-
-        mvc.perform(post(url, invalidUUID))
-            .andExpect(status().isBadRequest());
-
-        verifyNoInteractions(userService);
         verifyNoInteractions(projectService);
         verifyNoInteractions(issueService);
     }
 
     @Test
-    void postNewIssue_NotFoundProjectUUID() {
+    void getIssuesByProject_NotFoundProjectUUID() throws Exception {
         UUID projectUUID = UUID.randomUUID();
-        IssueRequest issueRequest = new IssueRequest();
 
-        when(jwt.getRole()).thenReturn(Role.ADMIN);
         when(projectService.getByUuid(projectUUID)).thenReturn(Optional.empty());
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            issueApi.postNewIssue(projectUUID, issueRequest);
-        });
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+        mvc.perform(get(url, projectUUID))
+                .andExpect(status().isNotFound());
+
+        verify(projectService).getByUuid(projectUUID);
+        verifyNoInteractions(issueService);
+    }
+
+    @Test
+    void getIssuesByProject_InvalidType() throws Exception {
+        UUID projectUUID = UUID.randomUUID();
+
+        mvc.perform(get(url, projectUUID)
+                        .param("type", "INVALID_TYPE")
+                        .param("priority", "LOW"))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(projectService);
+        verifyNoInteractions(issueService);
+    }
+
+    @Test
+    void getIssuesByProject_InvalidPriority() throws Exception {
+        UUID projectUUID = UUID.randomUUID();
+
+        mvc.perform(get(url, projectUUID)
+                        .param("type", "BUG")
+                        .param("priority", "INVALID_PRIORITY"))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(projectService);
+        verifyNoInteractions(issueService);
+    }
+
+    @Test
+    void getIssuesByProject_InvalidState() throws Exception{
+        UUID projectUUID = UUID.randomUUID();
+
+        mvc.perform(get(url, projectUUID)
+                        .param("type", "BUG")
+                        .param("priority", "LOW")
+                        .param("state", "INVALID_STATE"))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(projectService);
+        verifyNoInteractions(issueService);
+    }
+
+    @Test
+    void getIssuesByProject_TypeBug_PriorityLow_StatusTodo() throws Exception {
+        // 1. ARRANGE
+        UUID projectUuid = UUID.randomUUID();
+        Project fakeProject = new Project();
+        fakeProject.setUuid(projectUuid);
+
+        Issue fakeEntity = new Issue();
+        List<Issue> entityList = List.of(fakeEntity);
+        List<IssueResponse> dtoList = List.of(new IssueResponse());
+
+        when(projectService.getByUuid(projectUuid)).thenReturn(Optional.of(fakeProject));
+
+        when(issueService.getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.BUG),
+                eq(Priority.LOW),
+                eq(IssueState.TODO)
+        )).thenReturn(entityList);
+
+        when(issueService.enrichIssuesWithAuthors(entityList)).thenReturn(dtoList);
+
+        // 2. ACT & ASSERT
+        mvc.perform(get(url, projectUuid)
+                        .param("type", "BUG")
+                        .param("priority", "LOW")
+                        .param("state", "TODO")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // 3. VERIFY
+        verify(projectService).getByUuid(projectUuid);
+        verify(issueService).getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.BUG),
+                eq(Priority.LOW),
+                eq(IssueState.TODO)
+        );
+        verify(issueService).enrichIssuesWithAuthors(entityList);
+    }
+
+    @Test
+    void getIssuesByProject_TypeQuestion_PriorityMedium_StatusPending() throws Exception {
+        // 1. ARRANGE
+        UUID projectUuid = UUID.randomUUID();
+        Project fakeProject = new Project();
+        fakeProject.setUuid(projectUuid);
+
+        List<Issue> entityList = List.of(new Issue());
+        List<IssueResponse> dtoList = List.of(new IssueResponse());
+
+        when(projectService.getByUuid(projectUuid)).thenReturn(Optional.of(fakeProject));
+
+        when(issueService.getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.QUESTION),
+                eq(Priority.MEDIUM),
+                eq(IssueState.PENDING)
+        )).thenReturn(entityList);
+
+        when(issueService.enrichIssuesWithAuthors(entityList)).thenReturn(dtoList);
+
+        // 2. ACT & ASSERT
+        mvc.perform(get(url, projectUuid)
+                        .param("type", "QUESTION")
+                        .param("priority", "MEDIUM")
+                        .param("state", "PENDING")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        // 3. VERIFY
+        verify(projectService).getByUuid(projectUuid);
+        verify(issueService).getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.QUESTION),
+                eq(Priority.MEDIUM),
+                eq(IssueState.PENDING)
+        );
+        verify(issueService).enrichIssuesWithAuthors(entityList);
+    }
+
+    @Test
+    void getIssuesByProject_TypeFeature_PriorityHigh_StatusDone() throws Exception {
+        // 1. ARRANGE
+        UUID projectUuid = UUID.randomUUID();
+        Project fakeProject = new Project();
+        fakeProject.setUuid(projectUuid);
+
+        List<Issue> entityList = List.of(new Issue());
+        List<IssueResponse> dtoList = List.of(new IssueResponse());
+
+        when(projectService.getByUuid(projectUuid)).thenReturn(Optional.of(fakeProject));
+
+        when(issueService.getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.FEATURE),
+                eq(Priority.HIGH),
+                eq(IssueState.DONE)
+        )).thenReturn(entityList);
+
+        when(issueService.enrichIssuesWithAuthors(entityList)).thenReturn(dtoList);
+
+        // 2. ACT & ASSERT
+        mvc.perform(get(url, projectUuid)
+                        .param("type", "FEATURE")
+                        .param("priority", "HIGH")
+                        .param("state", "DONE")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        // 3. VERIFY
+        verify(projectService).getByUuid(projectUuid);
+        verify(issueService).getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.FEATURE),
+                eq(Priority.HIGH),
+                eq(IssueState.DONE)
+        );
+        verify(issueService).enrichIssuesWithAuthors(entityList);
+    }
+
+    @Test
+    void getIssuesByProject_TypeDocumentation_NoPriority_NoStatus() throws Exception {
+        // 1. ARRANGE
+        UUID projectUuid = UUID.randomUUID();
+        Project fakeProject = new Project();
+        fakeProject.setUuid(projectUuid);
+
+        List<Issue> entityList = List.of(new Issue());
+        List<IssueResponse> dtoList = List.of(new IssueResponse());
+
+        when(projectService.getByUuid(projectUuid)).thenReturn(Optional.of(fakeProject));
+
+        // Parametri mancanti -> ci aspettiamo null
+        when(issueService.getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.DOCUMENTATION),
+                eq(null),
+                eq(null)
+        )).thenReturn(entityList);
+
+        when(issueService.enrichIssuesWithAuthors(entityList)).thenReturn(dtoList);
+
+        // 2. ACT & ASSERT
+        mvc.perform(get(url, projectUuid)
+                        .param("type", "DOCUMENTATION")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        // 3. VERIFY
+        verify(projectService).getByUuid(projectUuid);
+        verify(issueService).getIssuesByProject(
+                eq(fakeProject),
+                eq(IssueType.DOCUMENTATION),
+                eq(null),
+                eq(null)
+        );
+        verify(issueService).enrichIssuesWithAuthors(entityList);
+    }
+
+    @Test
+    void getIssuesByProject_NoFilters() throws Exception {
+        // 1. ARRANGE
+        UUID projectUuid = UUID.randomUUID();
+        Project fakeProject = new Project();
+        fakeProject.setUuid(projectUuid);
+
+        List<Issue> entityList = List.of(new Issue(), new Issue(), new Issue(), new Issue());
+        List<IssueResponse> dtoList = List.of(new IssueResponse(), new IssueResponse(), new IssueResponse(), new IssueResponse());
+
+        when(projectService.getByUuid(projectUuid)).thenReturn(Optional.of(fakeProject));
+
+        when(issueService.getIssuesByProject(
+                eq(fakeProject),
+                eq(null),
+                eq(null),
+                eq(null)
+        )).thenReturn(entityList);
+
+        when(issueService.enrichIssuesWithAuthors(entityList)).thenReturn(dtoList);
+
+        // 2. ACT & ASSERT
+        mvc.perform(get(url, projectUuid)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(4)));
+
+        // 3. VERIFY
+        verify(projectService).getByUuid(projectUuid);
+        verify(issueService).getIssuesByProject(
+                eq(fakeProject),
+                eq(null),
+                eq(null),
+                eq(null)
+        );
+        verify(issueService).enrichIssuesWithAuthors(entityList);
+    }
+
+
+    /* --------- Tests per POST --------- */
+    @Test
+    void postNewIssue_InvalidProjectUUID() throws Exception {
+        String invalidUUID = "invalid-uuid";
+
+        mvc.perform(get(url, invalidUUID))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(projectService);
+        verifyNoInteractions(issueService);
+    }
+
+    @Test
+    void postNewIssue_NotFoundProjectUUID() throws Exception {
+        UUID projectUUID = UUID.randomUUID();
+
+        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.empty());
+
+        mvc.perform(get(url, projectUUID))
+                .andExpect(status().isNotFound());
+
+        verify(projectService).getByUuid(projectUUID);
+        verifyNoInteractions(issueService);
     }
 
     @Test
     void postNewIssue_InvalidIssueRequest() throws Exception {
-        MockMvc mvc = MockMvcBuilders.standaloneSetup(issueApi).build();
-        String url = "/projects/{projectUuid}/issues";
         UUID projectUUID = UUID.randomUUID();
 
-        String json = """
-            {
-                "description": "This is a test description",
-                "type": "BUG",
-                "priority": "HIGH"
-            }
-            """;
-
-        mvc.perform(post(url, projectUUID)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(json))
+        mvc.perform(post(url, projectUUID))
             .andExpect(status().isBadRequest());
 
         verifyNoInteractions(userService);
@@ -373,32 +377,54 @@ class IssueApiTest {
     }
 
     @Test
-    void postNewIssue_TC1() {
-        UUID projectUUID = UUID.randomUUID();
+    void postNewIssue_Success() throws Exception {
+        // 1. ARRANGE
+        UUID projectUuid = UUID.randomUUID();
+        UUID userUuid = UUID.randomUUID();
         Project fakeProject = new Project();
-        IssueRequest issueRequest = new IssueRequest();
+        User fakeUser = new User();
         Issue fakeIssue = new Issue();
+        fakeIssue.setUuid(UUID.randomUUID());
 
-        when(projectService.getByUuid(projectUUID)).thenReturn(Optional.of(fakeProject));
-        
+        when(jwt.getRole()).thenReturn(Role.ADMIN);
+        when(jwt.getUserUuid()).thenReturn(userUuid);
+
         Claims fakeClaims = mock(Claims.class);
-        when(fakeClaims.getSubject()).thenReturn("00000000-0000-0000-0000-000000000002");
+        when(fakeClaims.getSubject()).thenReturn(userUuid.toString());
         when(fakeClaims.get("name", String.class)).thenReturn("Mario");
         when(fakeClaims.get("surname", String.class)).thenReturn("Rossi");
-        when(fakeClaims.get("email", String.class)).thenReturn("mario.rossi@example.com");
+        when(fakeClaims.get("email", String.class)).thenReturn("mario@example.com");
         when(fakeClaims.get("role", String.class)).thenReturn("ADMIN");
+
         Jws<Claims> fakeJws = (Jws<Claims>) mock(Jws.class);
         when(fakeJws.getPayload()).thenReturn(fakeClaims);
         when(jwt.getToken()).thenReturn(fakeJws);
-        IssueResponse issueResponse = IssueResponse.map(fakeIssue, new UserResponse(jwt.getToken()));
-        
-        when(jwt.getRole()).thenReturn(Role.ADMIN);
-        when(userService.getByUuid(any())).thenReturn(null);
-        when(issueService.createIssue(any(), any(), any())).thenReturn(fakeIssue);
 
-        assertAll(
-            () -> assertEquals(HttpStatus.CREATED, issueApi.postNewIssue(projectUUID, issueRequest).getStatusCode()),
-            () -> assertEquals(issueResponse.toString(), issueApi.postNewIssue(projectUUID, issueRequest).getBody().toString())
-        );
+        when(projectService.getByUuid(projectUuid)).thenReturn(Optional.of(fakeProject));
+        when(userService.getByUuid(userUuid)).thenReturn(fakeUser);
+        when(issueService.createIssue(any(IssueRequest.class), eq(fakeUser), eq(fakeProject))).thenReturn(fakeIssue);
+
+        String jsonBody = """
+    {
+        "title": "Bug critico",
+        "description": "Dettagli del bug",
+        "type": "BUG",
+        "priority": "HIGH"
+    }
+    """;
+
+        // 2. ACT & ASSERT
+        mvc.perform(post(url, projectUuid)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonBody))
+                .andExpect(status().isCreated());
+
+        // 3. VERIFY
+        verify(jwt).getRole();
+        verify(projectService).getByUuid(projectUuid);
+        verify(jwt).getUserUuid();
+        verify(userService).getByUuid(userUuid);
+        verify(issueService).createIssue(any(IssueRequest.class), eq(fakeUser), eq(fakeProject));
+        verify(jwt).getToken();
     }
 }

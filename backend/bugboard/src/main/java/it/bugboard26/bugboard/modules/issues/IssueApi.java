@@ -3,6 +3,9 @@ package it.bugboard26.bugboard.modules.issues;
 import java.util.List;
 import java.util.UUID;
 
+import it.bugboard26.bugboard.enums.IssueState;
+import it.bugboard26.bugboard.enums.IssueType;
+import it.bugboard26.bugboard.enums.Priority;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +42,9 @@ public class IssueApi {
     @GetMapping("/issues")
     public ResponseEntity<List<IssueResponse>> getIssuesByProject(
         @PathVariable UUID uuid_project,
-        @RequestParam(required = false) String type,
-        @RequestParam(required = false) String priority,
-        @RequestParam(required = false) String state
+        @RequestParam(required = false) IssueType type,
+        @RequestParam(required = false) Priority priority,
+        @RequestParam(required = false) IssueState state
     ) {
         Project project = projectService.getByUuid(uuid_project).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found")
