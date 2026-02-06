@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.bugboard26.bugboard.auth.Jwt;
+import it.bugboard26.bugboard.core.auth.Jwt;
 import it.bugboard26.bugboard.microservices.users.UsersMicroservice;
 import it.bugboard26.bugboard.modules.auth.dtos.JwtResponse;
 import it.bugboard26.bugboard.modules.auth.dtos.LoginRequest;

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import it.bugboard26.bugboard.auth.Jwt;
+import it.bugboard26.bugboard.core.auth.Jwt;
 import it.bugboard26.bugboard.entities.User;
 import it.bugboard26.bugboard.enums.Role;
 import it.bugboard26.bugboard.microservices.users.UsersMicroservice;

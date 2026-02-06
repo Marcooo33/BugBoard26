@@ -2,7 +2,7 @@ package it.bugboard26.bugboard.modules.auth;
 
 import org.springframework.stereotype.Service;
 
-import it.bugboard26.bugboard.auth.JwtService;
+import it.bugboard26.bugboard.core.auth.JwtService;
 import it.bugboard26.bugboard.entities.User;
 import it.bugboard26.bugboard.microservices.users.UsersMicroservice;
 import it.bugboard26.bugboard.modules.auth.dtos.JwtResponse;

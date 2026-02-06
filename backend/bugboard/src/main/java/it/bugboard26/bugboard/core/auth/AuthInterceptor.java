@@ -1,4 +1,4 @@
-package it.bugboard26.bugboard.auth;
+package it.bugboard26.bugboard.core.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

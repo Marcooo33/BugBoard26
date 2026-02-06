@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import it.bugboard26.bugboard.auth.Jwt;
+import it.bugboard26.bugboard.core.auth.Jwt;
 import it.bugboard26.bugboard.entities.Project;
 import it.bugboard26.bugboard.enums.Role;
 import it.bugboard26.bugboard.modules.projects.dtos.ProjectRequest;

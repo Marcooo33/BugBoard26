@@ -1,18 +1,15 @@
 package it.bugboard26.bugboard.modules.issues;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.bugboard26.bugboard.auth.AuthInterceptor;
+import it.bugboard26.bugboard.core.auth.AuthInterceptor;
 import it.bugboard26.bugboard.entities.User;
 import it.bugboard26.bugboard.enums.IssueState;
 import it.bugboard26.bugboard.enums.IssueType;
 import it.bugboard26.bugboard.enums.Priority;
-import it.bugboard26.bugboard.modules.users.dtos.UserResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.autoconfigure.JacksonAutoConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,12 +24,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import it.bugboard26.bugboard.auth.Jwt;
+import it.bugboard26.bugboard.core.auth.Jwt;
 import it.bugboard26.bugboard.entities.Issue;
 import it.bugboard26.bugboard.entities.Project;
 import it.bugboard26.bugboard.enums.Role;

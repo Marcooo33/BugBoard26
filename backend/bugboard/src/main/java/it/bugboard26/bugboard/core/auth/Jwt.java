@@ -1,4 +1,4 @@
-package it.bugboard26.bugboard.auth;
+package it.bugboard26.bugboard.core.auth;
 
 import java.util.UUID;
 

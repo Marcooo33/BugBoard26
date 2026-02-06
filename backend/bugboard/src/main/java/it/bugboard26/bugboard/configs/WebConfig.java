@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import it.bugboard26.bugboard.auth.AuthInterceptor;
+import it.bugboard26.bugboard.core.auth.AuthInterceptor;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
