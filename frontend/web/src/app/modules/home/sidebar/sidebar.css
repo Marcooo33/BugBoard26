@@ -13,7 +13,7 @@
     justify-content: center;
     
     background-color: rgb(0, 0, 0, 0.7);
-    border-right: 3px solid #845EC2;
+    border-right: 3px solid rgba(255, 255, 255, 0.2);
     transition: width 0.3s ease;
 }
 
@@ -49,16 +49,22 @@
 
 .sidebar__border__button{
     max-width: fit-content;
-    height: 130px; ;
+    height: 130px;
     
     position: relative;
     left: -10px;
     
-    background-color: #845EC2;
+    background-color: #1a2235;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    color: black;
+    color: #a0a8b8;
     cursor: pointer;
-    transition: margin-left 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, margin-left 0.3s ease;
+}
+
+.sidebar__border__button:hover{
+    background-color: #243050;
+    color: #ffffff;
 }
 
 .sidebar__border__button--open{

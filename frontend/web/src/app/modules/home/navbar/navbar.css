@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
 
-    border-bottom: 3px solid #845EC2;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
     background-color: rgb(0, 0, 0, 0.7);
 }
 
@@ -32,12 +32,22 @@
     transition: all 0.3s ease;
 }
 
+.navbar__button:hover .navbar__button__icon{
+    color: #ffffff;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: #ffffff;
+}
+
 .navbar__button__icon{
     font-size: 35px;
-    background: linear-gradient(90deg, #845EC2, #FF6971, #F9F871);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #a0a8b8;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: #a0a8b8;
     display: inline-block;
     vertical-align: middle;
+    transition: color 0.2s ease, -webkit-text-fill-color 0.2s ease;
 }
