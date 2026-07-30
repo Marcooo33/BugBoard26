@@ -1,34 +1,86 @@
-.button{
-    height: fit-content;
+:host {
+    display: block;
     width: 100%;
+}
 
-    padding-right: 10px;
+.button {
+    width: 100%;
+    height: fit-content;
+
+    padding: 10px 16px 10px 12px;
 
     display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+
+    background-color: transparent;
+    border: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    text-align: left;
+
+    transition: background-color 0.18s ease, border-left-color 0.18s ease;
+}
+
+.button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left-color: rgba(88, 130, 255, 0.4);
+}
+
+.button--selected {
+    background-color: rgba(88, 130, 255, 0.12);
+    border-left-color: #4f86f7;
+}
+
+.button--selected:hover {
+    background-color: rgba(88, 130, 255, 0.18);
+}
+
+.button__project-indicator {
+    display: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #4f86f7;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.button--selected .button__project-indicator {
+    display: block;
+}
+
+.button__text-group {
+    display: flex;
     flex-direction: column;
-
-    background-color: black;
-    border: 1px solid #845EC2;
-    border-left: none;
+    gap: 2px;
+    min-width: 0;
 }
 
-.button__project-name{
+.button__project-name {
     text-align: left;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #c9d1d9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.18s ease;
 }
 
-.button__project-creation-date{
+.button--selected .button__project-name {
+    color: #ffffff;
+}
+
+.button:hover .button__project-name {
+    color: #e6edf3;
+}
+
+.button__project-creation-date {
     text-align: left;
-    font-size: 0.5rem;
-    color: grey;
-}
-
-.button:hover{
-    box-shadow: inset 0 0 20px #845EC2;
-}
-
-.button--selected{
-    background-color: #845EC270;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: #6e7681;
+    letter-spacing: 0.02em;
 }

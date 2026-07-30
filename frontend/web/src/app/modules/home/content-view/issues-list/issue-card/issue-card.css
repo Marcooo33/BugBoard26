@@ -1,44 +1,82 @@
-.component {
-    width: auto;
-    height: fit-content;
-
-    padding: 10px;
-
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+:host {
+    display: block;
 }
 
-.component__header {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-}
-
-.component__header__title:hover {
-    text-decoration: underline;
-    cursor: pointer;
-    color: #FF6347;
-}
-
-.component__header__labels {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
-}
-
-.component__header__subheader {
+.card {
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 14px 18px;
+
+    background-color: #161b22;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+    cursor: pointer;
+    transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.15s ease;
 }
 
-.component__header__title {
-    font-weight: bold;
-    font-size: 1.5rem;
+.card:hover {
+    background-color: #1c2128;
+    border-color: rgba(79, 134, 247, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
 }
 
-.component__subheader_author {
+/* ─── Card Body ──────────────────────────────────────── */
+.card__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+}
+
+.card__title {
     font-size: 1rem;
-    color: whitesmoke;
+    font-weight: 600;
+    color: #e6edf3;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color 0.18s ease;
+    word-break: break-word;
+}
+
+.card:hover .card__title {
+    color: #79c0ff;
+}
+
+.card__author {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: #6e7681;
+    line-height: 1;
+}
+
+/* ─── Badges Row ─────────────────────────────────────── */
+.card__badges {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+/* ─── Chevron ────────────────────────────────────────── */
+.card__arrow {
+    font-size: 20px;
+    color: #30363d;
+    flex-shrink: 0;
+    transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.card:hover .card__arrow {
+    color: #6e7681;
+    transform: translateX(3px);
 }

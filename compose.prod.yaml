@@ -11,6 +11,7 @@ services:
       - "4200:80"
     networks:
       - frontend
+      - backend
   
   bugboard:
     image: ghcr.io/pierluigifrascogna/bugboard26/bugboard:latest

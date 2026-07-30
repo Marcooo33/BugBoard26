@@ -1,47 +1,36 @@
-.QUESTION{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 5px 5px;
-    
-    background-color: lightgray;
-    color: black;
-    border-radius: 20px;
-    font-weight: bold;
+/* ─── Shared pill base ───────────────────────────────── */
+span {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    white-space: nowrap;
 }
 
-.BUG{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 5px 5px;
-    
-    background-color: #FF6347;
-    color: black;
-    border-radius: 20px;
-    font-weight: bold;
+/* BUG → red */
+.BUG {
+    background-color: #da3633;
+    color: #ffffff;
 }
 
-.DOCUMENTATION{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 5px 5px;
-    
-    background-color: #845EC2;
-    color: black;
-    border-radius: 20px;
-    font-weight: bold;
+/* FEATURE → amber/gold, light text */
+.FEATURE {
+    background-color: #b8860b;
+    color: #ffffff;
 }
 
-.FEATURE{
-    width: fit-content;
-    height: fit-content;
+/* DOCUMENTATION → indigo */
+.DOCUMENTATION {
+    background-color: #6e40c9;
+    color: #ffffff;
+}
 
-    padding: 5px 5px;
-    
-    background-color: #F9F871;
-    color: black;
-    border-radius: 20px;
-    font-weight: bold;
+/* QUESTION → slate */
+.QUESTION {
+    background-color: #3d4451;
+    color: #ffffff;
 }

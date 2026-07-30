@@ -5,53 +5,99 @@
 }
 
 .issues-list-component {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     min-height: 0;
 }
 
+/* ─── Header ─────────────────────────────────────────── */
 .component__header {
     width: 100%;
     height: fit-content;
+    padding: 24px 28px 16px;
 
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    justify-content: center;
+    display: flex;
     align-items: center;
-}
+    justify-content: space-between;
+    gap: 16px;
 
-.component__header--hidden {
-    display: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
 }
 
 .header__title {
-    padding: 10px;
+    margin: 0;
+    padding: 0;
 
-    background-color: rgb(0, 0, 0, 0.7);
-    font-weight: 900;
-    font-size: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.7);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #e6edf3;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
-.component__body {
-    height: 100%;
-    min-height: 0;
+.header__new-issue-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 
-    display: grid;
-    grid-template-rows: 1fr auto;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #1f6feb;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.header__new-issue-button:hover {
+    background-color: #388bfd;
+    box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.25);
+    transform: translateY(-1px);
+}
+
+.header__new-issue-button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.header__new-issue-button--hidden {
+    display: none;
+}
+
+.header__btn-icon {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* ─── Body ───────────────────────────────────────────── */
+.component__body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .body__issues {
-    height: fit-content;
-
-    padding: 20px;
-    gap: 10px;
-
+    flex: 1;
+    min-height: 0;
+    padding: 20px 28px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
 
     overflow-x: hidden;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
 .body__issues--hidden {
@@ -62,47 +108,19 @@
     width: 100%;
     height: fit-content;
 
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 28px 28px;
 }
 
 .body__new-issue--hidden {
     display: none;
 }
 
-.header__new-issue-button {
-    width: fit-content;
-    height: fit-content;
-
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #845EC2, #FF6971, #F9F871);
-    font-size: 1rem;
-    cursor: pointer;
-    color: black;
-    font-weight: bold;
-    transition: font-size 0.2s ease;
-}
-
-.header__new-issue-button--hidden {
-    display: none;
-}
-
-.header__new-issue-button:hover {
-    font-size: 1.1rem;
-    box-shadow: 0 0 10px #FF6971;
-}
-
-.body__filters{
-    background-color: rgb(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.7);
-}
-
-.filters__filter{
-    color: whitesmoke;
-    background-color: black;
-    border-radius: 10px;
-    
+.no-issues-label {
+    text-align: center;
+    color: #6e7681;
+    font-size: 0.9rem;
+    margin-top: 48px;
 }

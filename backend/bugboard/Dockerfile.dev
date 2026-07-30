@@ -1,5 +1,5 @@
 # Utilizziamo l'immagine ufficiale Microsoft per Java DevContainers (include JDK 17 o 21, Maven, Gradle)
-FROM mcr.microsoft.com/devcontainers/java:1-17-bullseye
+FROM mcr.microsoft.com/devcontainers/java:1-21-bullseye
 
 # Impostiamo la directory di lavoro
 WORKDIR /workspace

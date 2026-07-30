@@ -1,13 +1,12 @@
-<div class="component">
-    <div class="component__header">
-        <span class="component__header__title" (click)="selectIssue()">{{ issue.title }}</span> 
-        <div class="component__header__labels">
+<div class="card" (click)="selectIssue()">
+    <div class="card__body">
+        <span class="card__title">{{ issue.title }}</span>
+        <span class="card__author">{{ issue.author.name }} {{ issue.author.surname }}</span>
+        <div class="card__badges">
             <app-type-label [type]="issue.type"></app-type-label>
             <app-priority-label [priority]="issue.priority"></app-priority-label>
             <app-state-label [state]="issue.state"></app-state-label>
         </div>
-        <div class="component__header__subheader">
-            <div class="component__subheader_author">{{ issue.author.name }} {{ issue.author.surname }}</div>
-        </div>
     </div>
+    <span class="card__arrow material-symbols-outlined">chevron_right</span>
 </div>

@@ -1,10 +1,32 @@
-*{
-    color: white; 
-    font-family: 'Courier New', Courier, monospace, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    color: white;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #04101f;
+    margin: 0;
+    padding: 0;
+    background-color: #0d1117;
+}
+
+/* Scrollbar global styles */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }

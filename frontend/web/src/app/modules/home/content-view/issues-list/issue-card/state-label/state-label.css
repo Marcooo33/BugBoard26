@@ -1,35 +1,30 @@
-.TODO{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 5px 5px;
-    
-    background-color: lightgray;
-    color: black;
-    border-radius: 20px;
-    font-weight: bold;
+/* ─── Shared pill base ───────────────────────────────── */
+span {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    white-space: nowrap;
 }
 
-.PENDING{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 5px 5px;
-    
-    background-color: orange;
-    color: black;
-    border-radius: 20px;
-    font-weight: bold;
+/* DONE → emerald green */
+.DONE {
+    background-color: #1a7f4f;
+    color: #ffffff;
 }
 
-.DONE{
-    width: fit-content;
-    height: fit-content;
+/* PENDING → yellow, light text */
+.PENDING {
+    background-color: #cca300;
+    color: #ffffff;
+}
 
-    padding: 5px 5px;
-    
-    background-color: green;
-    color: black;
-    border-radius: 20px;
-    font-weight: bold;
+/* TODO → neutral grey, light text */
+.TODO {
+    background-color: #6e7681;
+    color: #ffffff;
 }

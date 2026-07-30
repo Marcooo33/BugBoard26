@@ -1,76 +1,101 @@
-:host{
+:host {
     display: block;
     height: 100%;
     min-height: 0;
 }
 
-.sidebar{
+.sidebar {
     height: 100%;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    
-    background-color: rgb(0, 0, 0, 0.7);
-    border-right: 3px solid rgba(255, 255, 255, 0.2);
+
+    background-color: #161b22;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
     transition: width 0.3s ease;
 }
 
-.sidebar--open{
-    width: 200px;
+.sidebar--open {
+    width: 220px;
 }
 
-.sidebar--closed{
+.sidebar--closed {
     width: 0px;
 }
 
-.sidebar__content{
+.sidebar__content {
     width: 100%;
     height: 100%;
 
     display: flex;
     flex-direction: column;
+    gap: 4px;
     background-color: transparent;
-    
+    padding: 12px 0;
+
     overflow-x: hidden;
     overflow-y: auto;
     min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-.sidebar__border{
+.sidebar__section-label {
+    padding: 4px 16px 8px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4d5566;
+}
+
+.sidebar__empty {
+    padding: 12px 16px;
+    font-size: 0.8rem;
+    color: #4d5566;
+    font-style: italic;
+}
+
+.sidebar__border {
     width: 0vw;
     height: 100%;
 
     display: flex;
     align-items: center;
-
 }
 
-.sidebar__border__button{
+.sidebar__border__button {
     max-width: fit-content;
-    height: 130px;
-    
+    height: 80px;
+    width: 16px;
+
     position: relative;
-    left: -10px;
-    
-    background-color: #1a2235;
+    left: -8px;
+
+    background-color: #1e2530;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: #a0a8b8;
+    border-radius: 0 8px 8px 0;
+    color: #6e7681;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, margin-left 0.3s ease;
+    font-size: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.sidebar__border__button:hover{
-    background-color: #243050;
+.sidebar__border__button:hover {
+    background-color: #30363d;
     color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.sidebar__border__button--open{
+.sidebar__border__button--open {
     margin-left: 0px;
 }
 
-.sidebar__border__button--closed{
+.sidebar__border__button--closed {
     margin-left: 10px;
 }

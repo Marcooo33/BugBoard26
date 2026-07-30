@@ -1,9 +1,10 @@
 <div class="sidebar" [ngClass]="isOpen() ? 'sidebar--open' : 'sidebar--closed'">
     <div class="sidebar__content">
+        <div class="sidebar__section-label">Progetti</div>
         @for (project of projects(); track $index){
             <app-sidebar-element [project]="project"></app-sidebar-element>
         }@empty {
-            <p>non ci sono progetti</p>
+            <p class="sidebar__empty">Nessun progetto</p>
         }
     </div>
     <div class="sidebar__border">

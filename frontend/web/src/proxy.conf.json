@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "http://bugboard:8082",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "logLevel": "debug"
+  }
+}

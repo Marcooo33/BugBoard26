@@ -1,13 +1,16 @@
-.navbar{
-    height: 60px;
+.navbar {
+    height: 58px;
     width: 100vw;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
-    background-color: rgb(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #161b22;
+    backdrop-filter: blur(12px);
+    position: relative;
+    z-index: 100;
 }
 
 .navbar__element {
@@ -20,33 +23,30 @@
     justify-content: center;
 }
 
-.navbar__button{
+.navbar__button {
     width: fit-content;
     height: fit-content;
-    margin: 10px;
-    padding: 10px;
+    margin: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.navbar__button:hover{
-    transform: scale(1.15);
-    transition: all 0.3s ease;
+.navbar__button:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
 }
 
-.navbar__button:hover .navbar__button__icon{
-    color: #ffffff;
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    -webkit-text-fill-color: #ffffff;
+.navbar__button:hover .navbar__button__icon {
+    color: #e6edf3;
+    -webkit-text-fill-color: #e6edf3;
 }
 
-.navbar__button__icon{
-    font-size: 35px;
-    color: #a0a8b8;
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    -webkit-text-fill-color: #a0a8b8;
+.navbar__button__icon {
+    font-size: 28px;
+    color: #6e7681;
+    -webkit-text-fill-color: #6e7681;
     display: inline-block;
     vertical-align: middle;
     transition: color 0.2s ease, -webkit-text-fill-color 0.2s ease;

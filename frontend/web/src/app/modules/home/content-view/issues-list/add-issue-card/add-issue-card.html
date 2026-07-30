@@ -1,36 +1,45 @@
 <div class="add-issue-card-component">
     <div class="component__body">
         <form id="issueForm" class="body__form" [formGroup]="issueForm" (submit)="createIssue()">
-            <div class="form__field">
-                <label for="name">Titolo: </label>
-                <input type="text" formControlName="title">
+
+            <div class="form__column form__column--left">
+                <div class="form__field">
+                    <label for="title">Titolo</label>
+                    <input id="title" type="text" formControlName="title" placeholder="Inserisci il titolo...">
+                </div>
+
+                <div class="form__field form__field--desc">
+                    <label for="description">Descrizione</label>
+                    <textarea id="description" formControlName="description" placeholder="Descrivi il problema o la funzionalità..."></textarea>
+                </div>
             </div>
-            <div class="form__field">
-                <label for="surname">Descrizione: </label>
-                <textarea type="text" formControlName="description"></textarea>
+
+            <div class="form__column form__column--right">
+                <div class="form__field">
+                    <label for="type">Tipo</label>
+                    <select id="type" formControlName="type">
+                        <option value="BUG">Bug</option>
+                        <option value="FEATURE">Feature</option>
+                        <option value="QUESTION">Question</option>
+                        <option value="DOCUMENTATION">Documentation</option>
+                    </select>
+                </div>
+
+                <div class="form__field">
+                    <label for="priority">Priorità</label>
+                    <select id="priority" formControlName="priority">
+                        <option value="LOW">Low</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="HIGH">High</option>
+                    </select>
+                </div>
             </div>
-            <div class="form__field">
-                <label for="type">Tipo: </label>
-                <select formControlName="type">
-                    <option value="BUG">bug</option>
-                    <option value="FEATURE">feature</option>
-                    <option value="QUESTION">question</option>
-                    <option value="DOCUMENTATION">documentation</option>
-                </select>
+
+            <div class="component__footer">
+                <button class="footer__button--cancel" type="button" (click)="closeNewIssueCard()">Annulla</button>
+                <button class="footer__button--submit" type="submit">Aggiungi</button>
             </div>
-            <div class="form__field">
-                <label for="priority">Priorità: </label>
-                <select formControlName="priority">
-                    <option value="LOW">low</option>
-                    <option value="MEDIUM">medium</option>
-                    <option value="HIGH">high</option>
-                </select>
-            </div>
+
         </form>
-    </div>
-    <div class="component__footer">
-        <button class="footer__button" (click)="closeNewIssueCard()">Annulla</button>
-        <div></div>
-        <button class="footer__button" type="submit" form="issueForm">Aggiungi</button>
     </div>
 </div>

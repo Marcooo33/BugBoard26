@@ -1,7 +1,7 @@
 <div class="component">
     <div class="component__header">
-        <div class="component__header__author">{{ comment.author.name }} {{ comment.author.surname }}</div>
-        <div class="component__header__created-at">{{ comment.createdAt | date: 'dd/MM/yyyy' }}</div>
+        <span class="component__header__author">{{ comment.author.name }} {{ comment.author.surname }}</span>
+        <span class="component__header__created-at">{{ comment.createdAt | date: 'dd/MM/yyyy' }}</span>
     </div>
     <div class="component__body">
         <div class="component__body__text">{{ comment.text }}</div>

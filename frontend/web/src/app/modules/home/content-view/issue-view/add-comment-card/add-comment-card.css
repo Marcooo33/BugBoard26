@@ -1,44 +1,92 @@
+:host {
+    display: block;
+}
+
 .component {
-    height: fit-content;
+    padding: 18px 20px;
 
-    flex: 1;
-    padding: 10px;
-
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+    background-color: #161b22;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
 }
 
-.component__body {
-    height: fit-content;
+/* ─── Title ──────────────────────────────────────────── */
+.component__title {
+    margin: 0 0 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
 }
 
+/* ─── Textarea ───────────────────────────────────────── */
+.comment-input {
+    width: 100%;
+    min-height: 110px;
+    padding: 12px 14px;
+    resize: vertical;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #21262d;
+    color: #e6edf3;
+    font-size: 0.875rem;
+    font-family: inherit;
+    line-height: 1.6;
+    outline: none;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comment-input::placeholder {
+    color: #4d5566;
+}
+
+.comment-input:focus {
+    border-color: #1f6feb;
+    box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.18);
+}
+
+/* ─── Footer / Button ────────────────────────────────── */
 .component__footer {
     display: flex;
-    flex-direction: row;
-
-    margin-left: auto;
-}
-
-.comment-input {
-    height: 150px;
-    width: 100%;
-    padding: 15px 5px;
-    resize: none;
-    border-radius: 10px;
-    background-color: black;
-    color: whitesmoke;
+    justify-content: flex-end;
+    margin-top: 12px;
 }
 
 .comment-button {
-    padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 9px 18px;
     border: none;
-    border-radius: 10px;
-    background-color: seagreen;
-    color: whitesmoke;
+    border-radius: 8px;
+    background-color: #1f6feb;
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 .comment-button:hover {
-    background-color: darkgreen;
-    cursor: pointer;
+    background-color: #388bfd;
+    box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.25);
+    transform: translateY(-1px);
+}
+
+.comment-button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.comment-btn-icon {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 400;
 }

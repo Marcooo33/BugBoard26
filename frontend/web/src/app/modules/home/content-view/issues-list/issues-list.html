@@ -1,9 +1,11 @@
 <div class="issues-list-component">
     <div class="component__header">
-        <div class="header__title"> {{ title() }}</div> 
-        <div></div>
+        <h1 class="header__title">{{ title() }}</h1>
         @if (!isViewer()) {
-            <div class="header__new-issue-button" (click)="openNewIssueCard()" [ngClass]="isNewIssueCardOpen() ? 'header__new-issue-button--hidden' : ''">Aggiungi issue</div>
+            <button class="header__new-issue-button" (click)="openNewIssueCard()" [ngClass]="isNewIssueCardOpen() ? 'header__new-issue-button--hidden' : ''">
+                <span class="material-symbols-outlined header__btn-icon">add</span>
+                Aggiungi issue
+            </button>
         }
     </div>
     <div class="component__body">
@@ -12,13 +14,11 @@
             @for (issue of issues(); track $index) {
                 <app-issue-card [issue]="issue"></app-issue-card>  
             }@empty {
-                <p class="no-issues-label">non ci sono issues, complimenti, ben fatto, ottimo lavoro ;)</p>
+                <p class="no-issues-label">🎉 Nessuna issue trovata — ottimo lavoro!</p>
             }
         </div>
         <div class="body__new-issue" [ngClass]="isNewIssueCardOpen() ? '' : 'body__new-issue--hidden'">
-            <div></div>
             <app-add-issue-card (close)="closeNewIssueCard()" ></app-add-issue-card>
-            <div></div>
         </div>
     </div>
 </div>

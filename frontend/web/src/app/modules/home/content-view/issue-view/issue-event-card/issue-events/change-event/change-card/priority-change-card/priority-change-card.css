@@ -1,46 +1,53 @@
-.priority-change-card-component{
+.priority-change-card-component {
     width: 100%;
-    height: fit-content;
-
-    display: grid;
-    grid-template-columns: min-content 1fr;
+    display: flex;
+    align-items: center;
     gap: 10px;
+    padding: 8px 14px;
+
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
 }
 
-.component__body{
-    width: fit-content;
-    height: fit-content;
-
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-}
-
-.change-logo{
-    width: fit-content;
-    height: 100%;
-
-    background: linear-gradient(90deg, #845EC2, #FF6971, #F9F871);
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: black;
-
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
-    align-content: center;
+/* Icon badge */
+.change-logo {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+
+    background-color: #21262d;
+    border-radius: 6px;
+    color: #6e7681;
 }
 
-.body__change-description{
-    width: 100%;
-    height: fit-content;
+.change-logo .material-symbols-outlined {
+    font-size: 16px;
+    color: #6e7681;
 }
 
-.body__change-date{
-    width: 100%;
-    height: fit-content;
+/* Body */
+.component__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
 }
 
-.material-symbols-outlined{
-    color: black;
+.body__change-description {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #6e7681;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    line-height: 1.5;
+}
+
+.body__created-at {
+    font-size: 0.7rem;
+    color: #4d5566;
 }

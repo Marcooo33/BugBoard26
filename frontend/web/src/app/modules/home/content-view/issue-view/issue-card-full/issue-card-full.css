@@ -1,97 +1,168 @@
-:host{
+:host {
     display: block;
-    height: fit-content;
-    min-height: 0;
 }
 
-.component{
+.component {
     width: 100%;
-    height: fit-content;
+    padding: 20px 22px;
 
-    padding: 10px;
-
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+    background-color: #161b22;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.component__header{
+/* ─── Header row ─────────────────────────────────────── */
+.component__header {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
-.component__header__author{
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-.component__header__labels{
+.component__header__meta {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.component__body{
-    margin-bottom: 10px;
+.meta__author {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #e6edf3;
 }
 
-.component__body__description textarea{
-    width: 100%;
-    height: 100px;
-    background-color: black;
-    color: whitesmoke;
-    border-radius: 5px;
-    padding: 5px;
+/* Edit form fields */
+.meta__edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.edit-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #6e7681;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.input {
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: #21262d;
+    color: #e6edf3;
+    font-size: 0.875rem;
     outline: none;
-    resize: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.component__footer{
-    width: 100%;
-    height: fit-content;
-
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
+.input:focus {
+    border-color: #1f6feb;
+    box-shadow: 0 0 0 2px rgba(31, 111, 235, 0.2);
 }
 
-.footer__button{
-    width: fit-content;
-    height: fit-content;
+/* ─── Action buttons (top-right) ─────────────────────── */
+.component__header__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
 
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: dimgrey;  
-    color: whitesmoke;
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 13px;
+    border-radius: 7px;
+    font-size: 0.8rem;
+    font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
 }
 
-.footer__button:hover{
-    background-color: rgb(80, 80, 80);
+/* Ghost button (Modifica / Annulla) */
+.action-btn--ghost {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #8b949e;
 }
 
-.footer__button__confirm{
-    background-color: seagreen;
+.action-btn--ghost:hover {
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #e6edf3;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
-.footer__button__confirm:hover{
-    background-color: darkgreen
+/* Confirm button */
+.action-btn--confirm {
+    background-color: #1f6feb;
+    border: none;
+    color: #ffffff;
 }
 
-.footer__button--hidden{
-    visibility: hidden;
-    pointer-events: none;
-    cursor: default;
+.action-btn--confirm:hover {
+    background-color: #388bfd;
+    box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.25);
 }
 
-.input{
-    padding: 5px;
-    border-radius: 5px;
-    background-color: black;
-    color: whitesmoke;
+.action-btn--hidden {
+    display: none;
+}
+
+.btn-icon {
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+/* ─── Badges row (left-aligned) ─────────────────────── */
+.component__badges {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+/* ─── Description ────────────────────────────────────── */
+.component__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.body__description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #c9d1d9;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.body__description-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px 12px;
+    resize: vertical;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: #21262d;
+    color: #e6edf3;
+    font-size: 0.875rem;
+    line-height: 1.6;
     outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.body__description-textarea:focus {
+    border-color: #1f6feb;
+    box-shadow: 0 0 0 2px rgba(31, 111, 235, 0.2);
+}

@@ -1,125 +1,173 @@
-.add-issue-card-component{
-    width: 60vw;
+:host {
+    display: block;
+    width: 100%;
+}
+
+/* ─── Card container ─────────────────────────────────────────────────── */
+.add-issue-card-component {
+    width: 100%;
+    max-width: 1000px;
     height: fit-content;
 
-    padding: 10px;
-    margin-top: 20px;
-    gap: 10px;
+    padding: 28px 32px 24px;
+    margin: 40px auto;
 
-    display: grid;
-    grid-template-rows: 1fr auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 
-    background-color: rgb(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.7);
+    background-color: #161b22;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
-.component__body{
+/* ─── Form body ──────────────────────────────────────────────────────── */
+.component__body {
     width: 100%;
-    height: fit-content;
 }
 
-.body__form{
+.body__form {
     width: 100%;
-    height: 100%;
-
-    gap: 10px;
-
     display: grid;
-    grid-template-rows: 1fr 3fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
 }
 
-.form__field{
+.form__column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form__field--desc {
+    flex-grow: 1;
+}
+
+/* ─── Individual field block (stacked label + input) ─────────────────── */
+.form__field {
     width: 100%;
-    height: 100%;
-
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-
-    justify-content: center;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.form__field textarea{
-    height: 70%;
-
-    background-color: black;
-    border: 2px solid #FF6971;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 1rem;
-    color: whitesmoke;
-
-    resize: none;
-    scrollbar-width: none;
+/* ─── Labels ──────────────────────────────────────────────────────────── */
+.form__field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #8b949e;
 }
 
-.form__field textarea:focus{
+/* ─── Shared input / textarea / select base ──────────────────────────── */
+.form__field input,
+.form__field textarea,
+.form__field select {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #e6edf3;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
-    box-shadow: 0 0 10px #FF6971;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
-.form__field label{
-    font-size: 1.5rem;
-    align-content: center;
+/* ─── Placeholder colour ─────────────────────────────────────────────── */
+.form__field input::placeholder,
+.form__field textarea::placeholder {
+    color: #484f58;
 }
 
-.form__field input{
-    background-color: black;
-    border: 2px solid #FF6971;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 1rem;
-    color: whitesmoke;
+/* ─── Focus state ────────────────────────────────────────────────────── */
+.form__field input:focus,
+.form__field textarea:focus,
+.form__field select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-.form__field input:focus{
-    outline: none;
-    box-shadow: 0 0 10px #FF6971;
+/* ─── Textarea specific ──────────────────────────────────────────────── */
+.form__field textarea {
+    min-height: 250px;
+    flex-grow: 1;
+    resize: vertical;
+    scrollbar-width: thin;
 }
 
-.form__field select{
-    background-color: black;
-    border: 2px solid #FF6971;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 1rem;
-    color: whitesmoke;
-}
-
-.form__field select:focus{
-    outline: none;
-    box-shadow: 0 0 10px #FF6971;
-}
-
-
-.component__footer{
-    width: 100%;
-    height: fit-content;
-
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    justify-content: center;
-    align-items: center;
-}
-
-.footer__button{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #845EC2, #FF6971, #F9F871);
-    font-size: 1rem;
+/* ─── Select arrow ───────────────────────────────────────────────────── */
+.form__field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b949e' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
     cursor: pointer;
-    color: black;
-    font-weight: bold;
-    transition: font-size 0.2s ease;
 }
 
-.footer__button:hover{
-    font-size: 1.1rem;
-    box-shadow: 0 0 10px #FF6971;
+.form__field select option {
+    background-color: #1c2128;
+    color: #e6edf3;
 }
 
+/* ─── Footer / action buttons ────────────────────────────────────────── */
+.component__footer {
+    grid-column: 1 / -1;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Cancel button  (ghost / secondary) ─────────────────────────────── */
+.footer__button--cancel {
+    background: none;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-weight: 500;
+    color: #8b949e;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.footer__button--cancel:hover {
+    color: #e6edf3;
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Add button  (primary CTA) ─────────────────────────────────────── */
+.footer__button--submit {
+    background-color: #2563eb;
+    border: none;
+    padding: 9px 22px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.footer__button--submit:hover {
+    background-color: #1d4ed8;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+    transform: translateY(-1px);
+}
+
+.footer__button--submit:active {
+    transform: translateY(0);
+    box-shadow: none;
+}

@@ -1,67 +1,73 @@
-:host{
+:host {
     display: block;
     height: 100%;
     min-height: 0;
 }
 
-.component{
+.component {
     height: 100%;
     min-height: 0;
-
     display: flex;
     flex-direction: column;
 }
 
-.component__header{
-    width: fit-content;
-    height: fit-content;
-
+/* ─── Header / Breadcrumb ────────────────────────────── */
+.component__header {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
+    padding: 18px 28px 14px;
 
-    background-color: rgb(0, 0, 0, 0.7);
-    font-weight: 900;
-    font-size: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
 }
 
 .component__header__undo-button {
-    font-size: 30px;
-}
-
-.component__header__undo-button:hover{
+    font-size: 22px;
+    color: #6e7681;
     cursor: pointer;
-    color: #FF6347;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    flex-shrink: 0;
+    user-select: none;
+    line-height: 1;
 }
 
-.component__header__title{
-    padding: 10px;
+.component__header__undo-button:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: #e6edf3;
 }
 
+.component__header__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e6edf3;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-.component__body{
-    height: 100%;
+/* ─── Body (scrollable) ──────────────────────────────── */
+.component__body {
+    flex: 1;
     min-height: 0;
 
     display: flex;
     flex-direction: column;
-
     gap: 10px;
+    padding: 24px 28px;
 
-    padding: 40px;
     overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-.component__body__issue-events{
+/* ─── Events thread ──────────────────────────────────── */
+.component__body__issue-events {
     display: flex;
     flex-direction: column;
-
-    gap: 10px;
-    padding-left: 20px;
-
-    overflow-y: auto;
-    overflow-x: hidden;
+    gap: 8px;
 }

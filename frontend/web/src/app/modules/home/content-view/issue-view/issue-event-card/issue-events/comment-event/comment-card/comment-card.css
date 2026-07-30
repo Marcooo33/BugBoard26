@@ -1,24 +1,39 @@
-.component{
+:host {
+    display: block;
+}
+
+.component {
     width: 100%;
-    height: fit-content;
+    padding: 14px 18px;
 
-    padding: 10px;
-
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #0d1117;
+    border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
 }
 
-.component__header{
-    margin-bottom: 10px;
+/* ─── Header ─────────────────────────────────────────── */
+.component__header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
 }
 
-.component__header__author{
-    font-weight: bold;
-    font-size: 1.5rem;
+.component__header__author {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #e6edf3;
 }
 
-.component__header__created-at{
-    font-size: 1rem;
-    color: whitesmoke;
+.component__header__created-at {
+    font-size: 0.75rem;
+    color: #6e7681;
+}
+
+/* ─── Body ───────────────────────────────────────────── */
+.component__body__text {
+    font-size: 0.875rem;
+    color: #c9d1d9;
+    line-height: 1.7;
+    word-break: break-word;
 }
