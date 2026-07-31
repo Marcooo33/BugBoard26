@@ -1,16 +1,27 @@
 /* ══════════════════════════════════════════════════
+   HOST – espande l'elemento Angular a tutta la larghezza
+   del contenitore flex/grid padre
+══════════════════════════════════════════════════ */
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════
    PROFILE CARD
 ══════════════════════════════════════════════════ */
 .profile-card {
-  width: 100%;
-  max-width: 700px;
+  width: 100%;        /* riempie l'host, che a sua volta riempie il padre */
+  max-width: 960px;   /* limite desktop per il layout a due colonne */
+  margin: 0 auto;     /* centra la card orizzontalmente nel blocco */
   background-color: #1a1a2e;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 36px 40px;
+  padding: 3rem;
   box-shadow:
     0 4px 30px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  box-sizing: border-box;
 }
 
 .profile-card__title {
@@ -24,44 +35,135 @@
 }
 
 /* ══════════════════════════════════════════════════
-   PROFILE ROWS (Read-only list)
+   BODY GRID
+══════════════════════════════════════════════════ */
+
+/* Mobile-first: singola colonna */
+.profile-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* Desktop: due colonne asimmetriche – più spazio alla colonna Sicurezza */
+@media (min-width: 768px) {
+  .profile-body {
+    grid-template-columns: 4fr 6fr;
+    gap: 0 2.5rem;
+    align-items: start;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   SECTION BLOCKS
+══════════════════════════════════════════════════ */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-section__heading {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #5a5a80;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 4px 0;
+  padding-bottom: 0;
+}
+
+/*
+  Mobile: divisore tra le due sezioni tramite
+  border-top sulla sezione Sicurezza
+*/
+@media (max-width: 767px) {
+  .profile-section--security {
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    padding-top: 1.25rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/*
+  Desktop: linea verticale separatrice tra le due colonne
+  tramite border-left sulla sezione Sicurezza
+*/
+@media (min-width: 768px) {
+  .profile-section--security {
+    border-left: 1px solid rgba(255, 255, 255, 0.09);
+    padding-left: 2.5rem;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   PROFILE ROWS (stacked layout)
 ══════════════════════════════════════════════════ */
 .profile-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  gap: 16px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .profile-row--last {
   border-bottom: none;
 }
 
-.profile-row__label {
-  font-size: 0.9rem;
-  color: #9090a8;
+/*
+  Row con bottone:
+  – Desktop: nowrap, testo troncato, bottone sempre a destra
+  – Mobile: collassa a colonna via media query
+*/
+.profile-row--actionable {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* ── Campo (label + valore impilati) ──────────── */
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0; /* evita overflow testo */
+}
+
+.profile-field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
   font-weight: 500;
-  min-width: 90px;
+  color: #7a7a9a;
+  letter-spacing: 0.01em;
+}
+
+.profile-field__icon {
+  color: #5a5a80;
   flex-shrink: 0;
 }
 
-.profile-row__value {
-  font-size: 0.95rem;
+.profile-field__value {
+  font-size: 1rem;
+  font-weight: 500;
   color: #e0e0ec;
-  font-weight: 400;
 }
 
-.profile-row__value--muted {
-  letter-spacing: 0.15em;
-  color: #6a6a80;
+/* Testo email: troncamento con ellipsis su singola riga */
+.profile-field__value--email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0; /* obbligatorio: permette al flex item di restringersi */
+  display: block;
 }
 
-.profile-row__action-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.profile-field__value--muted {
+  letter-spacing: 0.18em;
+  color: #5c5c78;
+  font-size: 0.95rem;
 }
 
 /* ══════════════════════════════════════════════════
@@ -75,6 +177,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  align-self: flex-start;
 }
 
 .role-badge--admin {
@@ -142,6 +245,35 @@
 .btn--primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Bottone azione: non si restringe mai al di sotto del suo contenuto */
+.profile-row__btn {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE – MOBILE (< 768px)
+══════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .profile-card {
+    padding: 1.5rem;
+  }
+
+  /* Il bottone scivola sotto il campo e prende tutta la larghezza */
+  .profile-row--actionable {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .profile-row__btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+    align-self: auto;
+  }
 }
 
 /* ══════════════════════════════════════════════════

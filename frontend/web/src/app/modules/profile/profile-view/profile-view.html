@@ -2,35 +2,89 @@
 <div class="profile-card">
   <h2 class="profile-card__title">Il tuo profilo</h2>
 
-  <div class="profile-row">
-    <span class="profile-row__label">Nome</span>
-    <span class="profile-row__value">{{ authStore.name() }}</span>
-  </div>
+  <!-- ── BODY GRID (due colonne su desktop) ─────── -->
+  <div class="profile-body">
 
-  <div class="profile-row">
-    <span class="profile-row__label">Cognome</span>
-    <span class="profile-row__value">{{ authStore.surname() }}</span>
-  </div>
+    <!-- BLOCCO 1: Dati Personali -->
+    <section class="profile-section">
+      <h3 class="profile-section__heading">Dati Personali</h3>
 
-  <div class="profile-row">
-    <span class="profile-row__label">Ruolo</span>
-    <span [ngClass]="getRoleBadgeClass()">{{ authStore.role() }}</span>
-  </div>
+      <!-- Nome -->
+      <div class="profile-row">
+        <div class="profile-field">
+          <span class="profile-field__label">
+            <svg class="profile-field__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            Nome
+          </span>
+          <span class="profile-field__value">{{ authStore.name() }}</span>
+        </div>
+      </div>
 
-  <div class="profile-row">
-    <span class="profile-row__label">Email</span>
-    <div class="profile-row__action-group">
-      <span class="profile-row__value">{{ authStore.email() }}</span>
-      <button class="btn btn--ghost" (click)="openDrawer('email')">Cambia Email</button>
-    </div>
-  </div>
+      <!-- Cognome -->
+      <div class="profile-row">
+        <div class="profile-field">
+          <span class="profile-field__label">
+            <svg class="profile-field__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            Cognome
+          </span>
+          <span class="profile-field__value">{{ authStore.surname() }}</span>
+        </div>
+      </div>
 
-  <div class="profile-row profile-row--last">
-    <span class="profile-row__label">Password</span>
-    <div class="profile-row__action-group">
-      <span class="profile-row__value profile-row__value--muted">••••••••</span>
-      <button class="btn btn--ghost" (click)="openDrawer('password')">Cambia Password</button>
-    </div>
+      <!-- Ruolo -->
+      <div class="profile-row profile-row--last">
+        <div class="profile-field">
+          <span class="profile-field__label">
+            <svg class="profile-field__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Ruolo
+          </span>
+          <span [ngClass]="getRoleBadgeClass()">{{ authStore.role() }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCCO 2: Sicurezza -->
+    <section class="profile-section profile-section--security">
+      <h3 class="profile-section__heading">Sicurezza</h3>
+
+      <!-- Email -->
+      <div class="profile-row profile-row--actionable">
+        <div class="profile-field">
+          <span class="profile-field__label">
+            <svg class="profile-field__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
+            </svg>
+            Email
+          </span>
+          <span
+            class="profile-field__value profile-field__value--email"
+            [title]="authStore.email()"
+          >{{ authStore.email() }}</span>
+        </div>
+        <button class="btn btn--ghost profile-row__btn" (click)="openDrawer('email')">Cambia Email</button>
+      </div>
+
+      <!-- Password -->
+      <div class="profile-row profile-row--actionable profile-row--last">
+        <div class="profile-field">
+          <span class="profile-field__label">
+            <svg class="profile-field__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Password
+          </span>
+          <span class="profile-field__value profile-field__value--muted">••••••••</span>
+        </div>
+        <button class="btn btn--ghost profile-row__btn" (click)="openDrawer('password')">Cambia Password</button>
+      </div>
+    </section>
+
   </div>
 </div>
 
