@@ -59,6 +59,11 @@ export class ProfileView {
     this.currentPasswordError.set(null);
   }
 
+  // ─── Logout ────────────────────────────────────────────────────────────────
+  logout() {
+    this.authStore.logout();
+  }
+
   // ─── Role Badge Helper ──────────────────────────────────────────────────────
   getRoleBadgeClass(): string {
     const role = this.authStore.role();

@@ -35,6 +35,24 @@
 }
 
 /* ══════════════════════════════════════════════════
+   LOGOUT ROW
+══════════════════════════════════════════════════ */
+.profile-logout {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 767px) {
+  .profile-logout .btn--danger {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ══════════════════════════════════════════════════
    BODY GRID
 ══════════════════════════════════════════════════ */
 
@@ -255,6 +273,23 @@
 .btn--primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.btn--danger {
+  background: transparent;
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+.btn--danger:hover {
+  background: rgba(248, 113, 113, 0.1);
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.6);
+  box-shadow: 0 0 12px rgba(248, 113, 113, 0.15);
+}
+
+.btn--danger:active {
+  background: rgba(248, 113, 113, 0.18);
 }
 
 /* Bottone azione: non si restringe mai al di sotto del suo contenuto */
