@@ -38,7 +38,14 @@ export class IssueCardFull {
   }
   
   activateEditMode() {
-    this.issueForm.reset();
+    const current = this.issue();
+    this.issueForm.patchValue({
+      title:       current?.title       ?? '',
+      description: current?.description ?? '',
+      state:       current?.state       ?? 'TODO',
+      priority:    current?.priority    ?? 'LOW',
+    });
+    this.issueForm.markAsPristine();
     this.isEditing.set(true);
   }
   
