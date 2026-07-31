@@ -1,90 +1,101 @@
-.add-project-card-component{
-    width: 70vw;
-    height: fit-content;
-    
-    justify-content: center;
-    align-items: center;
-    
-    display: grid;
-    grid-template-rows: auto 1fr;
+/* ── Host ─────────────────────────────────────── */
+:host {
+    display: block;
+    width: 100%;
+}
+
+/* ── Card wrapper ─────────────────────────────── */
+.add-project-card-component {
+    width: 100%;
+    background-color: #161b22;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-
 }
 
-.component__header{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: whitesmoke;
-
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
-}
-
-.component__body{
-    width: 100%;
-    height: fit-content;
-
-    padding: 10px;
-
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
-    gap: 10px;
-
-    display: grid;
-    grid-template-columns: 1fr auto;
-}
-
-.body__form{
-    width: 100%;
-    height: fit-content;
-}
-
-.form__field{
-    width: 100%;
-    height: fit-content;
-
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-}
-
-.form__field label{
-    font-size: 1.5rem;
-    align-content: center;
-}
-
-.form__field input{
-    background-color: black;
-    border: 2px solid #FF6971;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 1rem;
-    color: whitesmoke;
-}
-
-.body__button{
-    width: fit-content;
-    height: fit-content;
-
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #845EC2, #FF6971, #F9F871);
-    font-size: 1rem;
-    cursor: pointer;
-    color: black;
-    font-weight: bold;
-    transition: font-size 0.2s ease;
-}
-
-.body__button:hover{
+/* ── Card title ───────────────────────────────── */
+.component__header {
     font-size: 1.1rem;
-    box-shadow: 0 0 10px #FF6971;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #e6edf3;
+}
+
+/* ── Form + button row ────────────────────────── */
+.component__body {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.body__form {
+    flex: 1;
+}
+
+/* ── Field ────────────────────────────────────── */
+.form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form__field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #8b949e;
+}
+
+.form__field input {
+    width: 100%;
+    background-color: #0d1117;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    color: #e6edf3;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Improved contrast: #6e7681 is clearly readable on #0d1117 */
+.form__field input::placeholder {
+    color: #6e7681;
+}
+
+.form__field input:focus {
+    border-color: #388bfd;
+    box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.15);
+}
+
+/* ── Primary button ───────────────────────────── */
+.body__button {
+    flex-shrink: 0;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 8px;
+    background-color: #1f6feb;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+.body__button:hover {
+    background-color: #388bfd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(31, 111, 235, 0.35);
+}
+
+.body__button:active {
+    transform: translateY(0);
+    box-shadow: none;
 }

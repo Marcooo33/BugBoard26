@@ -1,21 +1,14 @@
 <div class="manage-page">
     <app-navbar></app-navbar>
     <div class="manage-page__body">
-        <div class="body__upper">
-            <div></div>
-            <app-add-project-card></app-add-project-card>
-            <div></div>
-        </div>
-        <div class="body__lower">
-            <div class="body__new-user-area">
-                <div></div>
-                <app-add-user-card></app-add-user-card>
-                <div></div>
+        <!-- Bounded container: caps at 1200px and centres on wide screens -->
+        <div class="manage-page__inner">
+            <div class="body__upper">
+                <app-add-project-card></app-add-project-card>
             </div>
-            <div class="body__user-list-area">
-                <div></div>
+            <div class="body__lower">
+                <app-add-user-card></app-add-user-card>
                 <app-users-list></app-users-list>
-                <div></div>
             </div>
         </div>
     </div>

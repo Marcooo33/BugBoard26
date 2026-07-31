@@ -2,15 +2,11 @@
     <div class="component__body">
         <div class="body__left">
             <app-role-label [role]="user.role"></app-role-label>
-            <div></div>
-            <div class="left__anagrafic-info">
-                {{ user.name }} {{ user.surname }}
-            </div>
-            <div class="left__mailing-info"> {{ user.email }}</div>
+            <div class="left__anagrafic-info">{{ user.name }} {{ user.surname }}</div>
+            <div class="left__mailing-info">{{ user.email }}</div>
         </div>
-        <div></div>
         <div class="body__right">
-            <button (click)="deleteUser()" class="right__button">Elimina utente</button>
+            <button (click)="deleteUser()" class="right__button">Elimina</button>
         </div>
     </div>
 </div>

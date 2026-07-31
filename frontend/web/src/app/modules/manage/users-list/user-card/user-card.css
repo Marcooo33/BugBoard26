@@ -1,56 +1,84 @@
-.user-card-component{
+/* ── Host ─────────────────────────────────────── */
+:host {
+    display: block;
     width: 100%;
-    height: fit-content;
-    
-    padding: 10px;
-    
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
 }
 
-.component__body{
+/* ── Single row ───────────────────────────────── */
+.user-card-component {
     width: 100%;
-    height: fit-content;
-
-    display: grid;
-    grid-template-columns: auto 1fr auto auto;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.body__left{
+/* Last child: no bottom border */
+:host:last-child .user-card-component {
+    border-bottom: none;
+}
+
+/* ── Row body: info left, button right ────────── */
+.component__body {
     width: 100%;
-    height: fit-content;
-
-    display: grid;
-    grid-template-rows: auto 1fr auto auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
 }
 
-.left__anagrafic-info{
-    font-size: 1rem;
-    font-weight: bold;
+/* ── Left side ────────────────────────────────── */
+.body__left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
 }
 
-.body__right{
-    width: 100%;
-    height: 100%;
+.left__anagrafic-info {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e6edf3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.right__button{
-    width: fit-content;
-    height: 100%;
+.left__mailing-info {
+    font-size: 0.8rem;
+    color: #8b949e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #845EC2, #FF6971, #F9F871);
-    font-size: 1rem;
+/* ── Right side: delete button ────────────────── */
+.body__right {
+    flex-shrink: 0;
+}
+
+/* Ghost-style destructive button */
+.right__button {
+    padding: 6px 14px;
+    border: 1px solid rgba(248, 81, 73, 0.5);
+    border-radius: 7px;
+    background-color: transparent;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #f85149;
     cursor: pointer;
-    color: black;
-    font-weight: bold;
-    transition: font-size 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
 }
 
-.right__button:hover{
-    font-size: 1.1rem;
-    box-shadow: 0 0 10px #F9F871;
+/* Solid red fill on hover: unambiguous destructive signal */
+.right__button:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(185, 28, 28, 0.4);
+}
+
+.right__button:active {
+    background-color: #991b1b;
+    border-color: #991b1b;
+    box-shadow: none;
 }
