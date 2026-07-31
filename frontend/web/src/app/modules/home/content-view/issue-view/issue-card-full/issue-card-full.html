@@ -1,4 +1,4 @@
-<div class="component">
+<div class="component" [class.component--description-mode]="descriptionMode">
     <form id="issueForm" [formGroup]="issueForm" (submit)="sendChanges()">
 
         <!-- ─── Header: author + date ─── -->
@@ -42,28 +42,46 @@
             }
         </div>
 
-        <!-- ─── Tags row (left-aligned) ─── -->
-        <div class="component__badges">
-            <app-type-label [type]="issue()!.type"></app-type-label>
-            @if (!isEditing()) {
-                <app-priority-label [priority]="issue()?.priority"></app-priority-label>
-            } @else {
-                <select formControlName="priority" class="input">
-                    <option [ngValue]="'LOW'">Low</option>
-                    <option [ngValue]="'MEDIUM'">Medium</option>
-                    <option [ngValue]="'HIGH'">High</option>
-                </select>
+        <!-- ─── Tags row (left-aligned) — hidden in description mode, shown in issue header ─── -->
+        @if (!descriptionMode) {
+            <div class="component__badges">
+                <app-type-label [type]="issue()!.type"></app-type-label>
+                @if (!isEditing()) {
+                    <app-priority-label [priority]="issue()?.priority"></app-priority-label>
+                } @else {
+                    <select formControlName="priority" class="input">
+                        <option [ngValue]="'LOW'">Low</option>
+                        <option [ngValue]="'MEDIUM'">Medium</option>
+                        <option [ngValue]="'HIGH'">High</option>
+                    </select>
+                }
+                @if (!isEditing()) {
+                    <app-state-label [state]="issue()?.state"></app-state-label>
+                } @else {
+                    <select formControlName="state" class="input">
+                        <option [ngValue]="'TODO'">Todo</option>
+                        <option [ngValue]="'PENDING'">Pending</option>
+                        <option [ngValue]="'DONE'">Done</option>
+                    </select>
+                }
+            </div>
+        } @else {
+            <!-- In description mode only show the select inputs when editing -->
+            @if (isEditing()) {
+                <div class="component__badges">
+                    <select formControlName="priority" class="input">
+                        <option [ngValue]="'LOW'">Low</option>
+                        <option [ngValue]="'MEDIUM'">Medium</option>
+                        <option [ngValue]="'HIGH'">High</option>
+                    </select>
+                    <select formControlName="state" class="input">
+                        <option [ngValue]="'TODO'">Todo</option>
+                        <option [ngValue]="'PENDING'">Pending</option>
+                        <option [ngValue]="'DONE'">Done</option>
+                    </select>
+                </div>
             }
-            @if (!isEditing()) {
-                <app-state-label [state]="issue()?.state"></app-state-label>
-            } @else {
-                <select formControlName="state" class="input">
-                    <option [ngValue]="'TODO'">Todo</option>
-                    <option [ngValue]="'PENDING'">Pending</option>
-                    <option [ngValue]="'DONE'">Done</option>
-                </select>
-            }
-        </div>
+        }
 
         <!-- ─── Description ─── -->
         <div class="component__body">

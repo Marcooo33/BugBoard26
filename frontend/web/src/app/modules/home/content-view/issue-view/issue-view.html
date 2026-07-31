@@ -1,17 +1,41 @@
 <div class="component">
-    <div class="component__header">
-        <span class="component__header__undo-button material-symbols-outlined" (click)="deselectIssue()">arrow_back</span>
-        <span class="component__header__title">{{ title() }}</span>
+
+    <!-- ─── Top navigation bar ─────────────────────────────────── -->
+    <div class="component__topbar">
+        <span class="component__topbar__undo-button material-symbols-outlined" (click)="deselectIssue()">arrow_back</span>
+        <span class="component__topbar__crumb">{{ projectName() }}</span>
+        <span class="material-symbols-outlined component__topbar__separator">chevron_right</span>
+        <span class="component__topbar__issue-name">{{ issueTitle() }}</span>
     </div>
+
+    <!-- ─── Main scrollable body ──────────────────────────────── -->
     <div class="component__body">
-        <app-issue-card-full></app-issue-card-full>
+
+        <!-- Issue main header: big title + relocated tags -->
+        @if (selectedIssue()) {
+            <header class="issue-main-header">
+                <h1 class="issue-main-header__title">{{ issueTitle() }}</h1>
+                <div class="issue-main-header__tags">
+                    <app-type-label     [type]="selectedIssue()!.type"></app-type-label>
+                    <app-priority-label [priority]="selectedIssue()!.priority"></app-priority-label>
+                    <app-state-label    [state]="selectedIssue()!.state"></app-state-label>
+                </div>
+            </header>
+        }
+
+        <!-- Issue description (card styling stripped) -->
+        <app-issue-card-full [descriptionMode]="true"></app-issue-card-full>
+
+        <!-- Replies thread -->
         <div class="component__body__issue-events">
             @for (issueEvent of issueEvents(); track $index) {
                 <app-issue-event-card [issueEvent]="issueEvent"></app-issue-event-card>
             }
         </div>
+
         @if(!isViewer()){
             <app-add-comment-card></app-add-comment-card>
         }
+
     </div>
 </div>

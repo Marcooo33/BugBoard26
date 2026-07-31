@@ -1,4 +1,4 @@
-import { Component, computed, inject, Signal, signal } from '@angular/core';
+import { Component, computed, inject, Input, Signal, signal } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators,} from '@angular/forms';
 import { IssueStore } from '../../issues-list/issue-card/issue/issue-store';
 import { TypeLabel } from "../../issues-list/issue-card/type-label/type-label";
@@ -16,6 +16,9 @@ import { IssueEventStore } from '../issue-event-card/issue-events/issue-event-st
   styleUrl: './issue-card-full.css',
 })
 export class IssueCardFull {
+  /** When true the card shell (background / border / shadow) is removed,
+   *  so the description renders as an open text body inside the issue header. */
+  @Input() descriptionMode = false;
   private readonly authStore = inject(AuthStore);
   private readonly issueStore = inject(IssueStore);
   private readonly issueEventStore = inject(IssueEventStore);

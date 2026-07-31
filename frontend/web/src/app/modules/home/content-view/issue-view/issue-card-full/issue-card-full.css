@@ -12,6 +12,19 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
+/* ─── Description-mode: prominent open description ────────── */
+/* Strips the heavy card shell but adds just enough structure
+   to anchor the text visually within the content flow.        */
+.component--description-mode {
+    background-color: rgba(147, 110, 229, 0.04);
+    border: none;
+    border-left: 3px solid #5a4b81;
+    border-radius: 0 6px 6px 0;
+    box-shadow: none;
+    padding: 16px 20px 20px 20px;
+    margin-bottom: 4px;
+}
+
 /* ─── Header row ─────────────────────────────────────── */
 .component__header {
     display: flex;
@@ -154,6 +167,14 @@
     line-height: 1.75;
     white-space: pre-wrap;
     word-break: break-word;
+}
+
+/* Typography upgrade when rendered as the main description */
+.component--description-mode .body__description {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #d4dbe3;
+    letter-spacing: 0.01em;
 }
 
 .body__description-textarea {

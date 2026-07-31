@@ -11,53 +11,70 @@
     flex-direction: column;
 }
 
-/* ─── Header / Breadcrumb ────────────────────────────── */
-.component__header {
+/* ─── Compact top navigation bar ────────────────────────── */
+.component__topbar {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 18px 28px 14px;
+    gap: 6px;
+    padding: 12px 24px 10px;
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     flex-shrink: 0;
 }
 
-.component__header__undo-button {
-    font-size: 22px;
+.component__topbar__undo-button {
+    font-size: 20px;
     color: #6e7681;
     cursor: pointer;
-    padding: 6px;
-    border-radius: 8px;
+    padding: 5px;
+    border-radius: 7px;
     transition: background-color 0.18s ease, color 0.18s ease;
     flex-shrink: 0;
     user-select: none;
     line-height: 1;
+    margin-right: 2px;
 }
 
-.component__header__undo-button:hover {
+.component__topbar__undo-button:hover {
     background-color: rgba(255, 255, 255, 0.07);
     color: #e6edf3;
 }
 
-.component__header__title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #e6edf3;
-    letter-spacing: -0.01em;
+.component__topbar__crumb {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6e7681;
+    letter-spacing: 0.02em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* ─── Body (scrollable) ──────────────────────────────── */
+.component__topbar__separator {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.component__topbar__issue-name {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #8b949e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ─── Body (scrollable) ──────────────────────────────────── */
 .component__body {
     flex: 1;
     min-height: 0;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 24px 28px;
+    gap: 0;
+    padding: 28px 32px;
 
     overflow-y: auto;
     overflow-x: hidden;
@@ -65,9 +82,43 @@
     scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-/* ─── Events thread ──────────────────────────────────── */
+/* ─── Issue main header ──────────────────────────────────── */
+.issue-main-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Prominent issue title */
+.issue-main-header__title {
+    margin: 0;
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #e6edf3;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+/* Tags row */
+.issue-main-header__tags {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* ─── Events thread ───────────────────────────────────────── */
 .component__body__issue-events {
     display: flex;
     flex-direction: column;
     gap: 8px;
+
+    /* Visual separator from description body */
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
