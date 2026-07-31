@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import it.bugboard26.users.entities.User;
 import it.bugboard26.users.modules.auth.dtos.UserResponse;
 import it.bugboard26.users.modules.users.dtos.RegistrationRequest;
+import it.bugboard26.users.modules.users.dtos.UpdateEmailRequest;
+import it.bugboard26.users.modules.users.dtos.UpdatePasswordRequest;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +49,20 @@ public class UserApi {
     @DeleteMapping("/{uuid_user}")
     public void deleteUser(@PathVariable UUID uuid_user) {
         userService.deleteUser(uuid_user);
+    }
+
+    @PatchMapping("/{uuid}/email")
+    public ResponseEntity<Void> updateEmail(@PathVariable UUID uuid,
+                                             @RequestBody UpdateEmailRequest request) {
+        userService.updateEmail(uuid, request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{uuid}/password")
+    public ResponseEntity<Void> updatePassword(@PathVariable UUID uuid,
+                                                @RequestBody UpdatePasswordRequest request) {
+        userService.updatePassword(uuid, request);
+        return ResponseEntity.ok().build();
     }
     
 }

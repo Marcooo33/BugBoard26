@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,8 @@ import it.bugboard26.bugboard.entities.User;
 import it.bugboard26.bugboard.enums.Role;
 import it.bugboard26.bugboard.microservices.users.UsersMicroservice;
 import it.bugboard26.bugboard.modules.users.dtos.RegistrationRequest;
+import it.bugboard26.bugboard.modules.users.dtos.UpdateEmailRequest;
+import it.bugboard26.bugboard.modules.users.dtos.UpdatePasswordRequest;
 import it.bugboard26.bugboard.modules.users.dtos.UserResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -57,6 +60,26 @@ public class UserApi {
         
         usersMicroService.deleteUser(uuid_user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/{id}/email")
+    public ResponseEntity<Void> updateEmail(@PathVariable UUID id,
+                                             @RequestBody UpdateEmailRequest request) {
+        if (!jwtUser.getUserUuid().equals(id))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only update your own email");
+
+        usersMicroService.updateEmail(id, request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<Void> updatePassword(@PathVariable UUID id,
+                                                @RequestBody UpdatePasswordRequest request) {
+        if (!jwtUser.getUserUuid().equals(id))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only update your own password");
+
+        usersMicroService.updatePassword(id, request);
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -20,6 +20,8 @@ import it.bugboard26.bugboard.microservices.users.dtos.UserMicroserviceRequest;
 import it.bugboard26.bugboard.modules.auth.dtos.LoginRequest;
 import it.bugboard26.bugboard.modules.auth.dtos.UpdateUserRequest;
 import it.bugboard26.bugboard.modules.users.dtos.RegistrationRequest;
+import it.bugboard26.bugboard.modules.users.dtos.UpdateEmailRequest;
+import it.bugboard26.bugboard.modules.users.dtos.UpdatePasswordRequest;
 import it.bugboard26.bugboard.modules.users.dtos.UserResponse;
 
 // TODO: handle errors in case Users Micro-Service is down
@@ -135,5 +137,41 @@ public class UsersMicroservice {
                     .uri(deleteURL)
                     .retrieve()
                     .toBodilessEntity();
+    }
+
+    public void updateEmail(UUID uuid, UpdateEmailRequest request) {
+        String url = userServiceURL + USERS_URL + "/" + uuid.toString() + "/email";
+        try {
+            restClient.patch()
+                        .uri(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(request)
+                        .retrieve()
+                        .toBodilessEntity();
+        }
+        catch (HttpClientErrorException e) {
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage());
+        }
+        catch (HttpStatusCodeException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error: " + e.getMessage());
+        }
+    }
+
+    public void updatePassword(UUID uuid, UpdatePasswordRequest request) {
+        String url = userServiceURL + USERS_URL + "/" + uuid.toString() + "/password";
+        try {
+            restClient.patch()
+                        .uri(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(request)
+                        .retrieve()
+                        .toBodilessEntity();
+        }
+        catch (HttpClientErrorException e) {
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage());
+        }
+        catch (HttpStatusCodeException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error: " + e.getMessage());
+        }
     }
 }
