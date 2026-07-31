@@ -90,8 +90,8 @@
 .form__field input:focus,
 .form__field textarea:focus,
 .form__field select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    border-color: #936EE5;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.2);
 }
 
 /* ─── Textarea specific ──────────────────────────────────────────────── */
@@ -149,7 +149,7 @@
 
 /* ─── Add button  (primary CTA) ─────────────────────────────────────── */
 .footer__button--submit {
-    background-color: #2563eb;
+    background-color: #936EE5;
     border: none;
     padding: 9px 22px;
     border-radius: 8px;
@@ -162,12 +162,18 @@
 }
 
 .footer__button--submit:hover {
-    background-color: #1d4ed8;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+    background-color: #A98DF0;
+    box-shadow: 0 4px 16px rgba(147, 110, 229, 0.4);
     transform: translateY(-1px);
 }
 
 .footer__button--submit:active {
+    background-color: #7A4BCB;
     transform: translateY(0);
     box-shadow: none;
+}
+
+.footer__button--submit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.5);
 }

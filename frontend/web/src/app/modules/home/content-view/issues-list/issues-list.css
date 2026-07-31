@@ -45,7 +45,7 @@
     padding: 9px 18px;
     border: none;
     border-radius: 8px;
-    background-color: #1f6feb;
+    background-color: #936EE5;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
@@ -58,14 +58,20 @@
 }
 
 .header__new-issue-button:hover {
-    background-color: #388bfd;
-    box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.25);
+    background-color: #A98DF0;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.3);
     transform: translateY(-1px);
 }
 
 .header__new-issue-button:active {
+    background-color: #7A4BCB;
     transform: translateY(0);
     box-shadow: none;
+}
+
+.header__new-issue-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.5);
 }
 
 .header__new-issue-button--hidden {

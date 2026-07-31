@@ -78,8 +78,8 @@
 
 .form__field input:focus,
 .form__field select:focus {
-    border-color: #388bfd;
-    box-shadow: 0 0 0 3px rgba(56, 139, 253, 0.15);
+    border-color: #936EE5;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.2);
 }
 
 /* ── Footer: button aligned right ────────────── */
@@ -92,7 +92,7 @@
     padding: 10px 24px;
     border: none;
     border-radius: 8px;
-    background-color: #1f6feb;
+    background-color: #936EE5;
     font-size: 0.9rem;
     font-weight: 600;
     color: #ffffff;
@@ -101,12 +101,18 @@
 }
 
 .footer__submit-button:hover {
-    background-color: #388bfd;
+    background-color: #A98DF0;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(31, 111, 235, 0.35);
+    box-shadow: 0 4px 14px rgba(147, 110, 229, 0.4);
 }
 
 .footer__submit-button:active {
+    background-color: #7A4BCB;
     transform: translateY(0);
     box-shadow: none;
+}
+
+.footer__submit-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.5);
 }

@@ -60,8 +60,8 @@
 }
 
 .input:focus {
-    border-color: #1f6feb;
-    box-shadow: 0 0 0 2px rgba(31, 111, 235, 0.2);
+    border-color: #936EE5;
+    box-shadow: 0 0 0 2px rgba(147, 110, 229, 0.25);
 }
 
 /* ─── Action buttons (top-right) ─────────────────────── */
@@ -100,14 +100,24 @@
 
 /* Confirm button */
 .action-btn--confirm {
-    background-color: #1f6feb;
+    background-color: #936EE5;
     border: none;
     color: #ffffff;
 }
 
 .action-btn--confirm:hover {
-    background-color: #388bfd;
-    box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.25);
+    background-color: #A98DF0;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.3);
+}
+
+.action-btn--confirm:active {
+    background-color: #7A4BCB;
+    box-shadow: none;
+}
+
+.action-btn--confirm:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.5);
 }
 
 .action-btn--hidden {
@@ -163,6 +173,6 @@
 }
 
 .body__description-textarea:focus {
-    border-color: #1f6feb;
-    box-shadow: 0 0 0 2px rgba(31, 111, 235, 0.2);
+    border-color: #936EE5;
+    box-shadow: 0 0 0 2px rgba(147, 110, 229, 0.25);
 }

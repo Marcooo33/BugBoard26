@@ -232,14 +232,24 @@
 }
 
 .btn--primary {
-  background-color: #3b82f6;
+  background-color: #936EE5;
   color: #fff;
-  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 10px rgba(147, 110, 229, 0.3);
 }
 
 .btn--primary:hover:not(:disabled) {
-  background-color: #2563eb;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.45);
+  background-color: #A98DF0;
+  box-shadow: 0 4px 16px rgba(147, 110, 229, 0.45);
+}
+
+.btn--primary:active:not(:disabled) {
+  background-color: #7A4BCB;
+  box-shadow: none;
+}
+
+.btn--primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.5);
 }
 
 .btn--primary:disabled {
@@ -418,8 +428,8 @@
 }
 
 .form-field__input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+  border-color: #936EE5;
+  box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.2);
 }
 
 .form-field__error {
