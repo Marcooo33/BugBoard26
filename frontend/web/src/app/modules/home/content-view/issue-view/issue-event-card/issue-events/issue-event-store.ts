@@ -29,13 +29,18 @@ export class IssueEventStore {
   private readonly _commentCreating = signal(false);
   readonly commentCreating = this._commentCreating.asReadonly();
 
+  private readonly _changeCreating = signal(false);
+  readonly changeCreating = this._changeCreating.asReadonly();
+
   sendChanges(changes: any[]): Observable<any> {
     if (!changes || changes.length === 0) {
       return of([]);
     }
+    this._changeCreating.set(true);
     const requests = changes.map(change => this.api.sendChanges(change));
     return forkJoin(requests).pipe(
-      tap(() => this.api.issueEventsResource.reload())
+      tap(() => this.api.issueEventsResource.reload()),
+      finalize(() => this._changeCreating.set(false))
     );
   }
 

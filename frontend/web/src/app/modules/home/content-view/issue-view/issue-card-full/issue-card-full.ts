@@ -24,6 +24,7 @@ export class IssueCardFull {
   private readonly issueEventStore = inject(IssueEventStore);
   readonly isViewer: Signal<boolean> = computed(() => this.authStore.role()==="VIEWER");
   readonly issue = computed(() => this.issueStore.selectedIssue());
+  readonly changeCreating = this.issueEventStore.changeCreating;
   
   isEditing = signal<boolean>(false);
   issueForm = new FormGroup({
@@ -50,33 +51,32 @@ export class IssueCardFull {
   }
   
   sendChanges(){
-    if (this.issueForm.invalid){
-      return;
-    } else {
-      const changes = this.getChangedValues();
-      
-      if (changes.length === 0) {
-        this.deactivateEditMode();
-        return;
-      }
+    if (this.changeCreating()) return;
+    if (this.issueForm.invalid) return;
 
-      this.issueEventStore.sendChanges(changes).subscribe({
-        next: () => {
-          this.deactivateEditMode();
-          
-          const currentIssue = this.issue();
-          if (currentIssue) {
-            this.issueStore.selectIssue({
-              ...currentIssue,
-              ...this.issueForm.value
-            } as any);
-          }
-        },
-        error: (err) => {
-          console.error('Errore durante l\'aggiornamento dell\'issue:', err);
-        }
-      });
+    const changes = this.getChangedValues();
+    
+    if (changes.length === 0) {
+      this.deactivateEditMode();
+      return;
     }
+
+    this.issueEventStore.sendChanges(changes).subscribe({
+      next: () => {
+        this.deactivateEditMode();
+        
+        const currentIssue = this.issue();
+        if (currentIssue) {
+          this.issueStore.selectIssue({
+            ...currentIssue,
+            ...this.issueForm.value
+          } as any);
+        }
+      },
+      error: (err) => {
+        console.error('Errore durante l\'aggiornamento dell\'issue:', err);
+      }
+    });
   }
 
   getChangedValues(){

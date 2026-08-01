@@ -34,9 +34,10 @@
                     <button type="submit"
                         form="issueForm"
                         class="action-btn action-btn--confirm"
-                        [ngClass]="isEditing() ? '' : 'action-btn--hidden'">
+                        [ngClass]="isEditing() ? '' : 'action-btn--hidden'"
+                        [disabled]="changeCreating()">
                         <span class="material-symbols-outlined btn-icon">check</span>
-                        Conferma
+                        {{ changeCreating() ? 'Saving...' : 'Conferma' }}
                     </button>
                 </div>
             }
