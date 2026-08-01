@@ -1,8 +1,8 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { IssueEventApi } from './issue-event-api';
 import { Comment } from './comment-event/comment-card/comment/comment';
 import { TIssueEvent } from './issue-event-model';
-import { forkJoin, tap, Observable, of } from 'rxjs';
+import { forkJoin, tap, Observable, of, finalize } from 'rxjs';
 
 export interface IssueEventsState {
   issueEvents: TIssueEvent[];
@@ -26,6 +26,9 @@ export class IssueEventStore {
   readonly loading = computed(() => this.state().loading); 
   readonly error = computed(() => this.state().error);
 
+  private readonly _commentCreating = signal(false);
+  readonly commentCreating = this._commentCreating.asReadonly();
+
   sendChanges(changes: any[]): Observable<any> {
     if (!changes || changes.length === 0) {
       return of([]);
@@ -37,13 +40,16 @@ export class IssueEventStore {
   }
 
   createComment(comment: Comment["text"]){
-    this.api.createComment(comment).subscribe({
+    this._commentCreating.set(true);
+    this.api.createComment(comment).pipe(
+      finalize(() => this._commentCreating.set(false))
+    ).subscribe({
       next: (createdComment: Comment) => {
         this.api.issueEventsResource.reload();
       },
       error: (err: Error) => {
         console.error('Error creating comment: ', err);
       }
-    })
+    });
   }
 }

@@ -6,9 +6,9 @@
         </form>
     </div>
     <div class="component__footer">
-        <button class="comment-button" type="submit" form="commentForm">
+        <button class="comment-button" type="submit" form="commentForm" [disabled]="isCreating">
             <span class="material-symbols-outlined comment-btn-icon">send</span>
-            Commenta
+            {{ isCreating ? 'Submitting...' : 'Commenta' }}
         </button>
     </div>
 </div>

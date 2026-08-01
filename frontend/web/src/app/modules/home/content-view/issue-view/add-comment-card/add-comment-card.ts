@@ -16,10 +16,14 @@ export class AddCommentCard {
     comment: new FormControl('', [Validators.required, Validators.minLength(2)])
   })
 
+  get isCreating(): boolean {
+    return this.issueEventsStore.commentCreating();
+  }
+
   saveComment(){
-    if(!this.commentForm.valid){
+    if(!this.commentForm.valid || this.isCreating){
       return
-    }else{
+    } else {
       const comment: Comment["text"] = this.commentForm.get("comment")!.value!;
       this.issueEventsStore.createComment(comment);   
     }
