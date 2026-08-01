@@ -2,6 +2,7 @@ import { computed, inject, Injectable } from '@angular/core';
 import { IssueEventApi } from './issue-event-api';
 import { Comment } from './comment-event/comment-card/comment/comment';
 import { TIssueEvent } from './issue-event-model';
+import { forkJoin, tap, Observable, of } from 'rxjs';
 
 export interface IssueEventsState {
   issueEvents: TIssueEvent[];
@@ -25,17 +26,14 @@ export class IssueEventStore {
   readonly loading = computed(() => this.state().loading); 
   readonly error = computed(() => this.state().error);
 
-  sendChanges(changes: any[]){
-    changes.forEach(change => {
-      this.api.sendChanges(change).subscribe({
-        next: () => {
-          this.api.issueEventsResource.reload();
-        },
-        error: (err: Error) => {
-          console.error('Error sending changes', err);
-        }
-      })
-    })
+  sendChanges(changes: any[]): Observable<any> {
+    if (!changes || changes.length === 0) {
+      return of([]);
+    }
+    const requests = changes.map(change => this.api.sendChanges(change));
+    return forkJoin(requests).pipe(
+      tap(() => this.api.issueEventsResource.reload())
+    );
   }
 
   createComment(comment: Comment["text"]){

@@ -54,7 +54,28 @@ export class IssueCardFull {
       return;
     } else {
       const changes = this.getChangedValues();
-      this.issueEventStore.sendChanges(changes);
+      
+      if (changes.length === 0) {
+        this.deactivateEditMode();
+        return;
+      }
+
+      this.issueEventStore.sendChanges(changes).subscribe({
+        next: () => {
+          this.deactivateEditMode();
+          
+          const currentIssue = this.issue();
+          if (currentIssue) {
+            this.issueStore.selectIssue({
+              ...currentIssue,
+              ...this.issueForm.value
+            } as any);
+          }
+        },
+        error: (err) => {
+          console.error('Errore durante l\'aggiornamento dell\'issue:', err);
+        }
+      });
     }
   }
 
