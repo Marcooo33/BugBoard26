@@ -1,0 +1,168 @@
+<div class="landing-container">
+  <!-- Technical Blueprint Grid Background & Ambient Lighting -->
+  <div class="blueprint-overlay" aria-hidden="true"></div>
+  <div class="glow-orb orb-1" aria-hidden="true"></div>
+  <div class="glow-orb orb-2" aria-hidden="true"></div>
+
+  <!-- 1. NAVBAR (Top) -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <img src="images/Logotype.svg" alt="BugBoard26 Logo" class="nav-logo-img" />
+      </div>
+      <div class="nav-actions">
+        <a routerLink="/login" class="btn btn-outline">Accedi</a>
+        <button type="button" class="btn btn-demo btn-demo-nav">
+          Prova la Demo
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <!-- 2. HERO SECTION (Center) -->
+    <header class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">BugBoard26</h1>
+        <p class="hero-subtitle">Piattaforma di issue handling per team di sviluppo</p>
+        <p class="hero-description">
+          Semplifica il tracciamento dei bug, gestisci il flusso di lavoro e ottimizza la collaborazione tra sviluppatori, designer e gestori di prodotto in un unico workspace ad alte prestazioni.
+        </p>
+        <div class="hero-cta-container">
+          <a routerLink="/login" class="btn btn-hero-outline">Accedi</a>
+          <button type="button" class="btn btn-demo btn-demo-hero">
+            Prova la Demo
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 3. FEATURES SECTION (Below Hero) -->
+    <section class="features-section" aria-labelledby="features-heading">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 id="features-heading" class="section-title">Funzionalità Principali</h2>
+          <p class="section-subtitle">Organizzazione, collaborazione e controllo per il tuo team di sviluppo.</p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Card 1: Issue Management (Shield Icon) -->
+          <article class="feature-card">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="card-icon-container icon-shield">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2L3 7V12C3 17.55 6.84 22.74 12 24C17.16 22.74 21 17.55 21 12V7L12 2Z" fill="url(#shield-grad)" fill-opacity="0.15" stroke="url(#shield-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 8V13M12 16H12.01" stroke="url(#shield-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                  <linearGradient id="shield-grad" x1="3" y1="2" x2="21" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#a855f7"/>
+                    <stop offset="1" stop-color="#3b82f6"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h3 class="card-title">Gestione delle Issue</h3>
+            <p class="card-description">
+              Classifica i ticket in modo granulare con categorie dedicate: <strong>Bug</strong>, <strong>Feature</strong>, <strong>Documentation</strong> e <strong>Question</strong>.
+            </p>
+          </article>
+
+          <!-- Card 2: Active Interaction (Chat/Comment Icon) -->
+          <article class="feature-card">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="card-icon-container icon-chat">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M21 11.5C21 15.6421 17.4183 19 13 19C11.7206 19 10.5103 18.7183 9.43572 18.2142L4 20L5.59015 15.8927C4.6006 14.636 4 13.1311 4 11.5C4 7.35786 7.58172 4 12 4C16.4183 4 20 7.35786 20 11.5" fill="url(#chat-grad)" fill-opacity="0.15" stroke="url(#chat-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 11H16M8 14H13" stroke="url(#chat-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                  <linearGradient id="chat-grad" x1="4" y1="4" x2="21" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#3b82f6"/>
+                    <stop offset="1" stop-color="#06b6d4"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h3 class="card-title">Interazione Attiva</h3>
+            <p class="card-description">
+              Discussioni in tempo reale tramite commenti, cambio dinamico dello stato di avanzamento e assegnazione immediata della priorità.
+            </p>
+          </article>
+
+          <!-- Card 3: Hierarchical Management (Users Icon) -->
+          <article class="feature-card">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="card-icon-container icon-users">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M16 21V19C16 16.7909 14.2091 15 12 15H6C3.79086 15 2 16.7909 2 19V21" stroke="url(#users-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="9" cy="7" r="4" fill="url(#users-grad)" fill-opacity="0.15" stroke="url(#users-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 21V19C21.9986 17.1771 20.765 15.5857 19 15.13" stroke="url(#users-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 3.13C17.7699 3.58317 19.0078 5.17799 19.0078 7.005C19.0078 8.83201 17.7699 10.4268 16 10.88" stroke="url(#users-grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                  <linearGradient id="users-grad" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#ec4899"/>
+                    <stop offset="1" stop-color="#a855f7"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h3 class="card-title">Gestione Gerarchica</h3>
+            <p class="card-description">
+              Sistema di autorizzazioni basato su ruoli ben definiti: <strong>Viewer</strong> per consultazione, <strong>Developer</strong> per operatività e <strong>Admin</strong> per la gestione avanzata.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TECH STACK SECTION (Bottom) -->
+    <section class="tech-section" aria-labelledby="tech-heading">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 id="tech-heading" class="section-title">Stack Tecnologico</h2>
+          <p class="section-subtitle">Costruito con tecnologie enterprise e moderne.</p>
+        </div>
+
+        <div class="tech-grid">
+          <!-- Card 1: Angular -->
+          <div class="tech-card card-angular">
+            <div class="icon-box">
+              <i class="devicon-angular-plain colored"></i>
+            </div>
+            <h3 class="tech-title">Angular</h3>
+            <p class="tech-subtitle">Sviluppo di Single Page Application (SPA) modulari e reattive basate su TypeScript.</p>
+          </div>
+
+          <!-- Card 2: Spring Boot -->
+          <div class="tech-card card-spring">
+            <div class="icon-box">
+              <i class="devicon-spring-original colored"></i>
+            </div>
+            <h3 class="tech-title">Spring Boot</h3>
+            <p class="tech-subtitle">API RESTful sicure tramite token JWT e integrate al database con Hibernate/JPA.</p>
+          </div>
+
+          <!-- Card 3: PostgreSQL -->
+          <div class="tech-card card-postgres">
+            <div class="icon-box">
+              <i class="devicon-postgresql-plain colored"></i>
+            </div>
+            <h3 class="tech-title">PostgreSQL</h3>
+            <p class="tech-subtitle">Progettazione di database relazionali robusti, scalabili e ad alte prestazioni.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Non hai un account? <a href="mailto:info.BugBoard26@fakemail.com?subject=Info%20BugBoard26" class="footer-contact">Contattaci</a> per scoprire le nostre soluzioni e accedere ai nostri servizi.<br>
+    <a href="mailto:info.BugBoard26@fakemail.com?subject=Info%20BugBoard26">info.BugBoard26@fakemail.com</a><br>
+    Trovaci anche su:
+    <a href="https://github.com/tuo-username" target="_blank" rel="noopener noreferrer" class="footer-github">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align: middle; margin-right: 4px;">
+        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+      </svg>
+      GitHub
+    </a>
+  </footer>
+</div>
