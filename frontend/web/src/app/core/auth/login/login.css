@@ -1,117 +1,187 @@
 /* =========================================================
-   Login component styles — sober deep dark mode.
-   Body global background: #03101f (styles.css).
+   Login component styles — landing-page night-sky theme.
+   Deep space gradient, nebula glows, glassmorphism panel.
    ========================================================= */
 :host {
   display: block;
   min-height: 100vh;
   width: 100%;
-  background-color: #03101f;
+  background-color: #090b13;
+  background-image:
+    linear-gradient(180deg, #0b1026 0%, #090b13 55%, #05060c 100%);
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
 }
 
 .login-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 20px;
-  padding-bottom: 0px;
-  gap: 28px;
   width: 100%;
-  height: 100%;
   min-height: 100vh;
   box-sizing: border-box;
 }
 
+/* ── Atmospheric Night-Sky Background Layers (Pure CSS) ── */
+.blueprint-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.18) 0%, rgba(59, 130, 246, 0.10) 40%, transparent 75%);
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+  background-position: center top;
+}
 
-/* ── Logo — DO NOT MODIFY ── */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+
+  &.orb-1 {
+    width: 420px;
+    height: 420px;
+    top: -40px;
+    left: -120px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.55) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
+  &.orb-2 {
+    width: 480px;
+    height: 480px;
+    top: 30%;
+    right: -140px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.45) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
+  &.orb-3 {
+    width: 380px;
+    height: 380px;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+}
+
+/* ── Content wrapper stacked above the background ── */
+.login-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  padding: 44px 16px 0;
+  box-sizing: border-box;
+}
+
+/* ── Logo Title — vibrant gradient text, no clunky frame ── */
 .logo-title {
-  width: 100%;
-  padding: 10px;
-  max-width: 600px;
-  display: block;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 0 18px rgb(0,0,0,0.7);
-  background-color: rgb(0,0,0,0.7);
-}
-
-.login-container p {
+  margin: 0;
+  font-size: clamp(2.6rem, 6vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
   text-align: center;
-  font-size: 1rem;
-  line-height: 1.4;
-  padding: 12px 16px;
-  border-radius: 10px;
-  box-shadow: 0 0 18px rgb(0,0,0,0.7);
-  background-color: rgb(0,0,0,0.7);
+  background: linear-gradient(90deg, #ec4899 0%, #845EC2 35%, #F9F871 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.45));
 }
 
+.subtitle {
+  margin: 0;
+  max-width: 720px;
+  text-align: center;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  text-wrap: balance;
+}
 
-/* ── Form Card ── */
+/* ── Form Card (glassmorphism with glowing border) ── */
 .form-card {
-  padding: 28px;
-  border-radius: 12px;
+  padding: 30px 28px;
+  border-radius: 16px;
   width: 100%;
-  max-width: 350px;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-
-  background-color: rgba(13, 27, 42, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-
-  margin: 0 auto;
   box-sizing: border-box;
+  margin: 0 auto;
+
+  background: rgba(16, 22, 38, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid transparent;
+  border-image: linear-gradient(135deg, rgba(168, 85, 247, 0.8), rgba(6, 182, 212, 0.8)) 1;
+  box-shadow:
+    0 0 14px rgba(168, 85, 247, 0.18),
+    0 0 18px rgba(6, 182, 212, 0.14),
+    0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 .form-card h2 {
   margin: 0;
   font-size: 1.6rem;
-  background: transparent;
-  color: whitesmoke;
+  font-weight: 700;
+  color: #ffffff;
   text-align: center;
+  letter-spacing: -0.01em;
 }
 
-/* ── Input Fields ── */
+/* ── Input Fields (dark with thin purple glowing borders) ── */
 .form-card input {
   background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.35);
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 13px 14px;
   font-size: 1rem;
-  color: #e8eaf0;
+  color: #f8fafc;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-card input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .form-card input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+  border-color: rgba(192, 132, 252, 0.9);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.12), 0 0 12px rgba(168, 85, 247, 0.25);
 }
 
-/* ── Login Button (keep gradient) ── */
+/* ── Login Button (keep gradient, enhanced with glow) ── */
 .form-card button {
-  padding: 12px;
+  padding: 13px 12px;
   border: none;
   border-radius: 10px;
   font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   cursor: pointer;
+  color: #000000;
   background: linear-gradient(90deg, #845EC2, #FF6971, #F9F871);
-  color: black;
-  font-weight: 600;
-  transition: font-size 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 16px rgba(255, 105, 113, 0.35), 0 0 22px rgba(249, 248, 113, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-card button:hover {
-  font-size: 1.25rem;
-  box-shadow: 0 0 10px rgba(255, 105, 113, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px rgba(255, 105, 113, 0.55), 0 0 8px rgba(249, 248, 113, 0.3);
 }
-
 
 /* ── Validation warnings ── */
 .active-warning {
@@ -126,10 +196,11 @@
   display: none;
 }
 
-
 /* ── Footer ── */
 footer {
   width: 100%;
+  position: relative;
+  z-index: 1;
   text-align: left;
   background-color: rgba(0, 0, 0, 0.6);
   color: rgba(255, 255, 255, 0.55);
@@ -172,14 +243,13 @@ footer a:hover {
   color: #ffffff;
 }
 
-
 /* ── Responsive ── */
 @media (max-width: 480px) {
-  .form-card {
-    padding: 22px;
+  .login-content {
+    padding-top: 28px;
   }
 
-  .login-container p {
-    padding: 10px;
+  .form-card {
+    padding: 22px;
   }
 }

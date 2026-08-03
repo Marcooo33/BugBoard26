@@ -1,22 +1,29 @@
 <div class="login-container">
+  <!-- Atmospheric Night-Sky / Nebula Background -->
+  <div class="blueprint-overlay" aria-hidden="true"></div>
+  <div class="glow-orb orb-1" aria-hidden="true"></div>
+  <div class="glow-orb orb-2" aria-hidden="true"></div>
+  <div class="glow-orb orb-3" aria-hidden="true"></div>
 
-  <img class="logo-title bg-readable" src="images/Logotype.svg" />
+  <div class="login-content">
+    <h1 class="logo-title">BugBoard26</h1>
 
-  <p class="bg-readable subtitle">
-    Benvenuto su BugBoard26! La piattaforma tutto in uno per la gestione di team di sviluppo, progetti e issue.
-  </p>
+    <p class="subtitle">
+      Benvenuto su BugBoard26! La piattaforma tutto in uno per la gestione di team di sviluppo, progetti e issue.
+    </p>
 
-  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-    <div class="form-card">
-      <h2>Accedi</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="form-card">
+        <h2>Accedi</h2>
 
-      <input type="email" formControlName="email" placeholder="Email" name="email">
-      <div [ngClass]=" isValidEmail ? 'inactive-warning' : 'active-warning'"> Inserire una email valida </div>
-      <input type="password" formControlName="password" placeholder="Password" name="password"/>
-      <div [ngClass]=" isValidPassword ? 'inactive-warning' : 'active-warning'"> Inserire la password corretta </div>
-      <button type="submit">Login</button>
-    </div>
-  </form>
+        <input type="email" formControlName="email" placeholder="Email" name="email">
+        <div [ngClass]=" isValidEmail ? 'inactive-warning' : 'active-warning'"> Inserire una email valida </div>
+        <input type="password" formControlName="password" placeholder="Password" name="password"/>
+        <div [ngClass]=" isValidPassword ? 'inactive-warning' : 'active-warning'"> Inserire la password corretta </div>
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
 
   <footer>
     Non hai un account? <a href="mailto:info.BugBoard26@fakemail.com?subject=Info%20BugBoard26" class="footer-contact">Contattaci</a> per scoprire le nostre soluzioni e accedere ai nostri servizi.<br>
@@ -29,5 +36,4 @@
       GitHub
     </a>
   </footer>
-
 </div>
