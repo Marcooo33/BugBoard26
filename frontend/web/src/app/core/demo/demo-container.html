@@ -1,0 +1,17 @@
+<div class="demo-banner" role="banner" aria-label="Demo mode banner">
+  <span class="demo-banner__badge" aria-hidden="true">DEMO</span>
+  <span class="demo-banner__label">Sei nella modalità Demo</span>
+  <div class="demo-banner__actions">
+    <button class="demo-banner__btn demo-banner__btn--reset" (click)="resetDemo()">
+      <span class="material-symbols-outlined">restart_alt</span>
+      Reset dei dati
+    </button>
+    <button class="demo-banner__btn demo-banner__btn--exit" (click)="exitDemo()">
+      <span class="material-symbols-outlined">logout</span>
+      Esci dalla Demo
+    </button>
+  </div>
+</div>
+<div class="demo-content">
+  <router-outlet />
+</div>

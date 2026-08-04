@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthStore } from '../../../core/auth/auth-store';
 import { AuthApi } from '../../../core/auth/auth-api';
 import { ToastService } from '../../../core/ui/toast/toast.service';
+import { DemoDataService } from '../../../core/demo/demo-data.service';
 
 export type DrawerMode = 'email' | 'password' | null;
 
@@ -18,6 +19,9 @@ export class ProfileView {
   protected readonly authStore = inject(AuthStore);
   private readonly authApi = inject(AuthApi);
   private readonly toast = inject(ToastService);
+  private readonly demoData = inject(DemoDataService);
+
+  protected readonly isDemo = computed(() => this.demoData.isActive());
 
   // ─── Drawer State ─────────────────────────────────────────────────────────
   drawerMode = signal<DrawerMode>(null);
@@ -74,7 +78,7 @@ export class ProfileView {
 
   // ─── Submit Email ──────────────────────────────────────────────────────────
   submitEmail() {
-    if (this.emailForm.invalid) return;
+    if (this.isDemo() || this.emailForm.invalid) return;
     const uuid = this.authStore.uuid();
     const newEmail = this.emailForm.controls.newEmail.value!;
     if (!uuid) return;
@@ -111,7 +115,7 @@ export class ProfileView {
 
   // ─── Submit Password ───────────────────────────────────────────────────────
   submitPassword() {
-    if (this.passwordForm.invalid) return;
+    if (this.isDemo() || this.passwordForm.invalid) return;
     const uuid = this.authStore.uuid();
     const currentPassword = this.passwordForm.controls.currentPassword.value!;
     const newPassword = this.passwordForm.controls.newPassword.value!;

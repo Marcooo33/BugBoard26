@@ -7,7 +7,8 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (auth.isAuthenticated()) {
-    return router.createUrlTree(['/home']);
+    const isDemo = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('demo') === '1';
+    return router.createUrlTree([isDemo ? '/demo/home' : '/home']);
   }
 
   return true;

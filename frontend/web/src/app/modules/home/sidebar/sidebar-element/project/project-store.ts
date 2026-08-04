@@ -1,6 +1,7 @@
-import { computed, inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { ProjectApi } from './project-api';
 import { Project } from './project-model';
+import { AuthStore } from '../../../../../core/auth/auth-store';
 
 export interface ProjectsState {
   projects: Project[]
@@ -14,6 +15,13 @@ export interface ProjectsState {
 export class ProjectStore {
 
   private api = inject(ProjectApi);
+  private readonly authStore = inject(AuthStore);
+
+  private readonly _resetOnLogout = effect(() => {
+    if (!this.authStore.jwt()) {
+      this.resetState();
+    }
+  });
 
   private readonly _state = computed<ProjectsState>(() => ({
     projects: this.api.projectsResource.hasValue() ? this.api.projectsResource.value() : [] as Project[],
@@ -42,6 +50,10 @@ export class ProjectStore {
         console.error('Failed to create project', err);
       }
     });
+  }
+
+  resetState() {
+    this._selectedProject.set(null);
   }
 
 }

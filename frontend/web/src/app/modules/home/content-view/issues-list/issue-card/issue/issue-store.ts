@@ -1,7 +1,8 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { IssueApi } from './issue-api';
 import { IIssue, INewIssue } from './issue';
 import { IssueFiltersStore } from '../../issues-filters/issue-filters-store';
+import { AuthStore } from '../../../../../../core/auth/auth-store';
 
 export interface IIssueState {
   projectIssues: IIssue[];
@@ -15,6 +16,13 @@ export interface IIssueState {
 export class IssueStore {
 
   private readonly api = inject(IssueApi);
+  private readonly authStore = inject(AuthStore);
+
+  private readonly _resetOnLogout = effect(() => {
+    if (!this.authStore.jwt()) {
+      this.resetState();
+    }
+  });
   
   private readonly _state = computed<IIssueState>(() => ({
     projectIssues: this.api.issuesResource.hasValue() ? this.api.issuesResource.value() :[] as IIssue[],
@@ -47,6 +55,10 @@ export class IssueStore {
         console.error('Error creating issue:', err);
       },
     });
+  }
+
+  resetState() {
+    this._selectedIssue.set(null);
   }
 
 }

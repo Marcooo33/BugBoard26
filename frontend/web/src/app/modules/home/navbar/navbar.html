@@ -1,14 +1,14 @@
 <div class="navbar">
-    <div class="navbar__element" routerLink="/home">
+    <div class="navbar__element" [routerLink]="[demoPrefix() + '/home']">
        <img src="/images/Logotype.svg" alt="logotype">
     </div>
 
     <div class="navbar__element navbar__icons">
-        <a class="navbar__button" routerLink="/home"> <span class="navbar__button__icon material-symbols-outlined">home</span> </a>
+        <a class="navbar__button" [routerLink]="[demoPrefix() + '/home']"> <span class="navbar__button__icon material-symbols-outlined">home</span> </a>
         @if (isAdmin()) {
-            <a class="navbar__button" routerLink="/manage"> <span class="navbar__button__icon material-symbols-outlined">admin_panel_settings</span> </a>
+            <a class="navbar__button" [routerLink]="[demoPrefix() + '/manage']"> <span class="navbar__button__icon material-symbols-outlined">admin_panel_settings</span> </a>
         }
-        <a class="navbar__button" routerLink="/profile"> <span class="navbar__button__icon material-symbols-outlined">account_circle</span> </a>
+        <a class="navbar__button" [routerLink]="[demoPrefix() + '/profile']"> <span class="navbar__button__icon material-symbols-outlined">account_circle</span> </a>
     </div>
 
     <div class="navbar__element"></div>

@@ -3,7 +3,6 @@ import { Jwt } from './JWT/jwt';
 import { AuthApi } from './auth-api';
 import { JwtResponse } from './JWT/jwt-response';
 import { IUserUpdate, TUserRole } from '../../modules/profile/user/user';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +10,11 @@ import { Router } from '@angular/router';
 export class AuthStore {
 
   private readonly authApi = inject(AuthApi);
-  private readonly router = inject(Router);
 
-  private readonly jwt: WritableSignal<Jwt | null> = signal(null);
+  private readonly _jwt: WritableSignal<Jwt | null> = signal(null);
+  readonly jwt = this._jwt.asReadonly();
+
+  readonly resourceVersion = signal(0);
 
   readonly JWT: Signal<Jwt | null> = computed(() => this.jwt());
 
@@ -33,22 +34,25 @@ export class AuthStore {
 
   loadTokenFromStorage() {
     const token = localStorage.getItem('auth');
-    this.jwt.set(token ? new Jwt(token) : null);
+    this._jwt.set(token ? new Jwt(token) : null);
   }
   
   setJwt(token: Jwt) {
     this.saveTokenToStorage(token);
-    this.jwt.set(token);
+    this._jwt.set(token);
+    this.resourceVersion.update(v => v + 1);
   }
 
   unsetJwt() {
     this.deleteTokenFromStorage();
-    this.jwt.set(null);
+    this._jwt.set(null);
+    this.resourceVersion.update(v => v + 1);
   }
 
   logout() {
-    this.unsetJwt();
-    this.router.navigateByUrl('/login');
+    sessionStorage.removeItem('demo');
+    localStorage.removeItem('auth');
+    window.location.href = '/login';
   }
 
   private saveTokenToStorage(token: Jwt) {
@@ -68,7 +72,7 @@ export class AuthStore {
       next: (response: JwtResponse) => {
         const jwt = new Jwt(response.token);
         this.setJwt(jwt);
-        this.router.navigateByUrl(returnUrl || '/');
+        window.location.href = returnUrl || '/';
       },
       error: (err) => {
         console.error('Login failed', err);

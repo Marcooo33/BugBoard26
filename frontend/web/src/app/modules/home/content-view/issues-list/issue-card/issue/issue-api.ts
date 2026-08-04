@@ -4,6 +4,7 @@ import { INewIssue, IIssue } from './issue';
 import { ENVIRONMENT_TOKEN } from '../../../../../../../environments/environment-model';
 import { ProjectStore } from '../../../../sidebar/sidebar-element/project/project-store';
 import { IQueryParams, IssueFiltersStore } from '../../issues-filters/issue-filters-store';
+import { AuthStore } from '../../../../../../core/auth/auth-store';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class IssueApi {
   private readonly project = inject(ProjectStore);
   private readonly http = inject(HttpClient);
   private readonly filtersStore = inject(IssueFiltersStore);
+  private readonly authStore = inject(AuthStore);
 
   private readonly API_URL = this.env.urls.api;
   private readonly PROJECTS_URL = "/projects";
@@ -33,7 +35,7 @@ export class IssueApi {
   readonly issuesResource = httpResource<IIssue[]>(() => ({
     url: `${this.API_URL}${this.PROJECTS_URL}/${this.project.selectedProject()?.uuid}${this.ISSUES_URL}`,
     method: 'GET',
-    params: { ...this.filters() }
+    params: { ...this.filters(), _v: this.authStore.resourceVersion().toString() },
   }));
 
   createIssue(issue: INewIssue) {

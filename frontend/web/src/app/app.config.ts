@@ -6,6 +6,7 @@ import { ENVIRONMENT_TOKEN } from '../environments/environment-model';
 import { environment } from '../environments/environment';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './core/auth/JWT/jwt-interceptor';
+import { demoInterceptor } from './core/demo/demo.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     { provide: ENVIRONMENT_TOKEN, useValue: environment },
     provideHttpClient(
       withInterceptors([
+        demoInterceptor,
         jwtInterceptor,
       ])
     ),

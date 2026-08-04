@@ -5,6 +5,7 @@ import { IssueStore } from '../../../issues-list/issue-card/issue/issue-store';
 import { TIssueEvent } from './issue-event-model';
 import { Comment } from './comment-event/comment-card/comment/comment';
 import { ProjectStore } from '../../../../sidebar/sidebar-element/project/project-store';
+import { AuthStore } from '../../../../../../core/auth/auth-store';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class IssueEventApi {
   private readonly projectStore = inject(ProjectStore);
   private readonly issueStore = inject(IssueStore);
   private readonly http = inject(HttpClient);
+  private readonly authStore = inject(AuthStore);
 
   private readonly API_URL = this.env.urls.api;
   private readonly ISSUES_URL = "/issues";
@@ -25,6 +27,7 @@ export class IssueEventApi {
   readonly issueEventsResource = httpResource<TIssueEvent[]>(() => ({
     url: `${this.API_URL}${this.PROJECTS_URL}/${this.projectStore.selectedProject()?.uuid}/${this.issueStore.selectedIssue()?.uuid}${this.ISSUE_EVENTS_URL}`,
     method: 'GET',
+    params: { _v: this.authStore.resourceVersion().toString() },
   }));
 
   sendChanges(change: any){

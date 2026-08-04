@@ -1,10 +1,19 @@
-import { Injectable, signal } from "@angular/core";
+import { effect, inject, Injectable, signal } from "@angular/core";
 import { TIssueType, TIssuePriority, TIssueState } from "../issue-card/issue/issue";
+import { AuthStore } from '../../../../../core/auth/auth-store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IssueFiltersStore {
+
+  private readonly authStore = inject(AuthStore);
+
+  private readonly _resetOnLogout = effect(() => {
+    if (!this.authStore.jwt()) {
+      this.resetState();
+    }
+  });
 
   readonly filtersModel = signal<IFilters>({
     type: "",
@@ -26,6 +35,10 @@ export class IssueFiltersStore {
       priority: "",
       state: "",
     });
+  }
+
+  resetState() {
+    this.resetFilters();
   }
 }
 

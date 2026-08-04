@@ -53,6 +53,10 @@
     <section class="profile-section profile-section--security">
       <h3 class="profile-section__heading">Sicurezza</h3>
 
+      @if (isDemo()) {
+        <div class="demo-badge">⚠️ Modifica delle credenziali disabilitata in modalità Demo.</div>
+      }
+
       <!-- Email -->
       <div class="profile-row profile-row--actionable">
         <div class="profile-field">
@@ -67,7 +71,7 @@
             [title]="authStore.email()"
           >{{ authStore.email() }}</span>
         </div>
-        <button class="btn btn--ghost profile-row__btn" (click)="openDrawer('email')">Cambia Email</button>
+        <button class="btn btn--ghost profile-row__btn" (click)="openDrawer('email')" [disabled]="isDemo()">Cambia Email</button>
       </div>
 
       <!-- Password -->
@@ -81,7 +85,7 @@
           </span>
           <span class="profile-field__value profile-field__value--muted">••••••••</span>
         </div>
-        <button class="btn btn--ghost profile-row__btn" (click)="openDrawer('password')">Cambia Password</button>
+        <button class="btn btn--ghost profile-row__btn" (click)="openDrawer('password')" [disabled]="isDemo()">Cambia Password</button>
       </div>
     </section>
 
@@ -138,6 +142,7 @@
             formControlName="newEmail"
             placeholder="nuova@email.com"
             autocomplete="email"
+            [disabled]="isDemo()"
           />
           @if (emailError()) {
             <span class="form-field__error">{{ emailError() }}</span>
@@ -148,12 +153,12 @@
 
     <div class="drawer__footer">
       <button class="btn btn--ghost" type="button" (click)="closeDrawer()">Annulla</button>
-      <button
-        class="btn btn--primary"
-        type="submit"
-        form="emailForm"
-        [disabled]="emailForm.invalid || isLoading()"
-      >
+        <button
+          class="btn btn--primary"
+          type="submit"
+          form="emailForm"
+          [disabled]="emailForm.invalid || isLoading() || isDemo()"
+        >
         @if (isLoading()) { Salvataggio... } @else { Salva }
       </button>
     </div>
@@ -182,6 +187,7 @@
             formControlName="currentPassword"
             placeholder="••••••••"
             autocomplete="current-password"
+            [disabled]="isDemo()"
           />
           @if (currentPasswordError()) {
             <span class="form-field__error">{{ currentPasswordError() }}</span>
@@ -197,6 +203,7 @@
             formControlName="newPassword"
             placeholder="••••••••"
             autocomplete="new-password"
+            [disabled]="isDemo()"
           />
           @if (passwordError()) {
             <span class="form-field__error">{{ passwordError() }}</span>
@@ -211,7 +218,7 @@
         class="btn btn--primary"
         type="submit"
         form="passwordForm"
-        [disabled]="passwordForm.invalid || isLoading()"
+        [disabled]="passwordForm.invalid || isLoading() || isDemo()"
       >
         @if (isLoading()) { Salvataggio... } @else { Salva }
       </button>
