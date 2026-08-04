@@ -52,7 +52,7 @@ export class AuthStore {
   logout() {
     sessionStorage.removeItem('demo');
     localStorage.removeItem('auth');
-    window.location.href = '/login';
+    window.location.href = '/';
   }
 
   private saveTokenToStorage(token: Jwt) {

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthStore } from '../auth-store';
@@ -9,7 +10,7 @@ import { AuthStore } from '../auth-store';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
