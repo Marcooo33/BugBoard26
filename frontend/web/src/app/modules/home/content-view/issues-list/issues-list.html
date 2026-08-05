@@ -11,9 +11,13 @@
     <div class="component__body">
         <div class="body__issues" [ngClass]="isNewIssueCardOpen() ? 'body__issues--hidden' : ''">
             <app-issues-filters></app-issues-filters>
-            @for (issue of issues(); track $index) {
-                <app-issue-card [issue]="issue"></app-issue-card>  
-            }@empty {
+            @if (isLoading()) {
+                <p class="loading-label">Caricamento...</p>
+            } @else if (issues().length > 0) {
+                @for (issue of issues(); track $index) {
+                    <app-issue-card [issue]="issue"></app-issue-card>  
+                }
+            } @else {
                 <p class="no-issues-label">🎉 Nessuna issue trovata — ottimo lavoro!</p>
             }
         </div>

@@ -21,6 +21,7 @@ export class IssesList {
   readonly isNewIssueCardOpen = signal<boolean>(false);
   
   readonly title = computed(() => this.projectStore.name());
+  readonly isLoading = computed(() => this.issueStore.loading());
   readonly issues = computed(() => this.issueStore.projectIssues());
 
   readonly isViewer = computed(() => this.authStore.role()==="VIEWER");

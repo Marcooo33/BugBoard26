@@ -28,8 +28,14 @@
 
         <!-- Replies thread -->
         <div class="component__body__issue-events">
-            @for (issueEvent of issueEvents(); track $index) {
-                <app-issue-event-card [issueEvent]="issueEvent"></app-issue-event-card>
+            @if (isLoading()) {
+                <p class="issue-events__loading">Caricamento commenti e modifiche...</p>
+            } @else if (issueEvents().length > 0) {
+                @for (issueEvent of issueEvents(); track $index) {
+                    <app-issue-event-card [issueEvent]="issueEvent"></app-issue-event-card>
+                }
+            } @else {
+                <p class="issue-events__empty">Nessun commento o modifica</p>
             }
         </div>
 

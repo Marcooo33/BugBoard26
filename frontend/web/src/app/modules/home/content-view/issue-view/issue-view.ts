@@ -48,6 +48,7 @@ export class IssueView {
   readonly selectedIssue: Signal<IIssue | null> = computed(() => this.issueStore.selectedIssue());
 
   readonly issueEvents: Signal<TIssueEvent[]> = computed(() => this.issueEventStore.issueEvents());
+  readonly isLoading = computed(() => this.issueEventStore.loading());
   readonly isViewer: Signal<boolean> = computed(() => this.authStore.role() === "VIEWER");
 
   deselectIssue() {
