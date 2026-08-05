@@ -14,31 +14,17 @@
                 }
             </div>
 
-            <!-- Ghost edit/cancel buttons top-right -->
+            <!-- Edit button top-right (Hidden during edit mode) -->
             @if (!isViewer()) {
                 <div class="component__header__actions">
-                    <button type="button"
-                        class="action-btn action-btn--ghost"
-                        [ngClass]="isEditing() ? '' : 'action-btn--hidden'"
-                        (click)="deactivateEditMode()">
-                        <span class="material-symbols-outlined btn-icon">close</span>
-                        Annulla
-                    </button>
-                    <button type="button"
-                        class="action-btn action-btn--ghost"
-                        [ngClass]="!isEditing() ? '' : 'action-btn--hidden'"
-                        (click)="activateEditMode()">
-                        <span class="material-symbols-outlined btn-icon">edit</span>
-                        Modifica
-                    </button>
-                    <button type="submit"
-                        form="issueForm"
-                        class="action-btn action-btn--confirm"
-                        [ngClass]="isEditing() ? '' : 'action-btn--hidden'"
-                        [disabled]="changeCreating()">
-                        <span class="material-symbols-outlined btn-icon">check</span>
-                        {{ changeCreating() ? 'Salvataggio...' : 'Conferma' }}
-                    </button>
+                    @if (!isEditing()) {
+                        <button type="button"
+                            class="action-btn action-btn--ghost"
+                            (click)="activateEditMode()">
+                            <span class="material-symbols-outlined btn-icon">edit</span>
+                            Modifica
+                        </button>
+                    }
                 </div>
             }
         </div>
@@ -105,6 +91,25 @@
                 <textarea formControlName="description" class="body__description-textarea"></textarea>
             }
         </div>
+
+        <!-- ─── Actions Footer (Visible ONLY during edit mode) ─── -->
+        @if (isEditing() && !isViewer()) {
+            <div class="component__footer__actions">
+                <button type="button"
+                    class="action-btn action-btn--ghost"
+                    (click)="deactivateEditMode()">
+                    <span class="material-symbols-outlined btn-icon">close</span>
+                    Annulla
+                </button>
+                <button type="submit"
+                    form="issueForm"
+                    class="action-btn action-btn--confirm"
+                    [disabled]="changeCreating()">
+                    <span class="material-symbols-outlined btn-icon">check</span>
+                    {{ changeCreating() ? 'Salvataggio...' : 'Conferma' }}
+                </button>
+            </div>
+        }
 
     </form>
 </div>

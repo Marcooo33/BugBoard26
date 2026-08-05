@@ -6,18 +6,39 @@
 
   <!-- 1. NAVBAR (Top) -->
   <nav class="navbar" aria-label="Main Navigation">
-    <div class="nav-content">
-      <div class="nav-brand">
-        <img src="images/Logotype.svg" alt="BugBoard26 Logo" class="nav-logo-img" />
-      </div>
-      <div class="nav-actions">
-        <a routerLink="/login" class="btn btn-outline">Accedi</a>
-        <button type="button" class="btn btn-demo btn-demo-nav" (click)="goToDemo()">
-          Prova la Demo
+      <div class="nav-content">
+        <div class="nav-brand">
+          <img src="images/Logotype.svg" alt="BugBoard26 Logo" class="nav-logo-img" />
+        </div>
+        <div class="nav-actions">
+          <a routerLink="/login" class="btn btn-outline">Accedi</a>
+          <button type="button" class="btn btn-demo btn-demo-nav" (click)="goToDemo()">
+            Prova la Demo
+          </button>
+        </div>
+        <button
+          type="button"
+          class="nav-hamburger"
+          [class.active]="isMenuOpen"
+          (click)="toggleMenu()"
+          aria-label="Apri menu"
+          [attr.aria-expanded]="isMenuOpen"
+        >
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
         </button>
       </div>
-    </div>
-  </nav>
+
+      <div class="mobile-menu" [class.open]="isMenuOpen">
+        <div class="mobile-menu-inner">
+          <a routerLink="/login" class="btn btn-outline" (click)="closeMenu()">Accedi</a>
+          <button type="button" class="btn btn-demo btn-demo-nav" (click)="goToDemo(); closeMenu()">
+            Prova la Demo
+          </button>
+        </div>
+      </div>
+    </nav>
 
   <main class="main-content">
     <!-- 2. HERO SECTION (Center) -->

@@ -99,3 +99,30 @@
 .sidebar__border__button--closed {
     margin-left: 10px;
 }
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 58px;
+        left: 0;
+        height: calc(100vh - 58px);
+        width: 260px;
+        z-index: 90;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar--open {
+        width: 260px;
+        transform: translateX(0);
+    }
+
+    .sidebar--closed {
+        width: 260px;
+        transform: translateX(-100%);
+    }
+
+    .sidebar__border {
+        display: none;
+    }
+}

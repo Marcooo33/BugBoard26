@@ -11,6 +11,16 @@ import { Router, RouterLink } from '@angular/router';
 export class Landing {
   private readonly router = inject(Router);
 
+  isMenuOpen = false;
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
+
   goToDemo(): void {
     this.router.navigate(['/demo']);
   }

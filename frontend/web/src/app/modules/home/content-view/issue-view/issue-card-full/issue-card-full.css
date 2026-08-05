@@ -1,20 +1,22 @@
 :host {
     display: block;
+    width: 100%;
+    min-width: 0;
 }
 
 .component {
     width: 100%;
     padding: 20px 22px;
+    box-sizing: border-box;
 
     background-color: #161b22;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    min-width: 0;
 }
 
 /* ─── Description-mode: prominent open description ────────── */
-/* Strips the heavy card shell but adds just enough structure
-   to anchor the text visually within the content flow.        */
 .component--description-mode {
     background-color: rgba(147, 110, 229, 0.04);
     border: none;
@@ -32,12 +34,16 @@
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 12px;
+    min-width: 0;
 }
 
 .component__header__meta {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .meta__author {
@@ -51,6 +57,7 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 100%;
 }
 
 .edit-label {
@@ -70,6 +77,9 @@
     font-size: 0.875rem;
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    max-width: 100%;
+    width: 100%;
 }
 
 .input:focus {
@@ -77,7 +87,7 @@
     box-shadow: 0 0 0 2px rgba(147, 110, 229, 0.25);
 }
 
-/* ─── Action buttons (top-right) ─────────────────────── */
+/* ─── Action buttons ─────────────────────── */
 .component__header__actions {
     display: flex;
     align-items: center;
@@ -85,9 +95,20 @@
     flex-shrink: 0;
 }
 
+.component__footer__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .action-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
     padding: 6px 13px;
     border-radius: 7px;
@@ -133,10 +154,6 @@
     box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.5);
 }
 
-.action-btn--hidden {
-    display: none;
-}
-
 .btn-icon {
     font-size: 15px;
     line-height: 1;
@@ -151,6 +168,7 @@
     gap: 20px;
     flex-wrap: wrap;
     margin-bottom: 16px;
+    min-width: 0;
 }
 
 /* ─── Description ────────────────────────────────────── */
@@ -158,6 +176,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    min-width: 0;
 }
 
 .body__description {
@@ -166,6 +185,7 @@
     color: #c9d1d9;
     line-height: 1.75;
     white-space: pre-wrap;
+    overflow-wrap: anywhere;
     word-break: break-word;
 }
 
@@ -191,9 +211,43 @@
     outline: none;
     font-family: inherit;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .body__description-textarea:focus {
     border-color: #936EE5;
     box-shadow: 0 0 0 2px rgba(147, 110, 229, 0.25);
+}
+
+@media (max-width: 768px) {
+    .component {
+        padding: 14px 14px;
+    }
+
+    .component--description-mode {
+        padding: 12px 14px 14px 14px;
+    }
+
+    .component__header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .component__header__actions {
+        align-self: flex-end; 
+        width: auto;
+    }
+
+    .component__footer__actions {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .component__footer__actions .action-btn {
+        flex: 1;
+        padding: 10px 13px; /* Slightly taller for touch */
+    }
 }

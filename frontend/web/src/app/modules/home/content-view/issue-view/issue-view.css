@@ -1,16 +1,20 @@
 :host {
     display: block;
     height: 100%;
+    width: 100%;
+    max-width: 100vw;
     min-height: 0;
+    min-width: 0;
 }
 
 .component {
     height: 100%;
+    width: 100%;
     min-height: 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
 }
-
 /* ─── Compact top navigation bar ────────────────────────── */
 .component__topbar {
     display: flex;
@@ -20,6 +24,9 @@
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     flex-shrink: 0;
+
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .component__topbar__undo-button {
@@ -48,6 +55,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
+    flex-shrink: 1;
 }
 
 .component__topbar__separator {
@@ -64,12 +73,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
+    flex-shrink: 1;
 }
 
 /* ─── Body (scrollable) ──────────────────────────────────── */
 .component__body {
     flex: 1;
     min-height: 0;
+    min-width: 0;
 
     display: flex;
     flex-direction: column;
@@ -80,6 +92,9 @@
     overflow-x: hidden;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+
+    box-sizing: border-box;
+    width: 100%;
 }
 
 /* ─── Issue main header ──────────────────────────────────── */
@@ -90,6 +105,7 @@
     padding-bottom: 20px;
     margin-bottom: 4px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    min-width: 0;
 }
 
 /* Prominent issue title */
@@ -100,6 +116,8 @@
     color: #e6edf3;
     line-height: 1.25;
     letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* Tags row */
@@ -109,6 +127,7 @@
     align-items: center;
     gap: 6px;
     flex-wrap: wrap;
+    min-width: 0;
 }
 
 /* ─── Events thread ───────────────────────────────────────── */
@@ -117,8 +136,21 @@
     flex-direction: column;
     gap: 8px;
 
-    /* Visual separator from description body */
     margin-top: 24px;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 768px) {
+    .component__topbar {
+        padding: 10px 12px 8px;
+    }
+
+    .component__body {
+        padding: 16px 12px;
+    }
+
+    .issue-main-header__title {
+        font-size: 1.35rem;
+    }
 }

@@ -1,7 +1,7 @@
 <div class="home">
-    <app-navbar></app-navbar>
+    <app-navbar [sidebarOpen]="isSidebarOpen" (toggleSidebar)="onToggleSidebar()"></app-navbar>
     <div class="main-view" [class.closed]="!isSidebarOpen">
-        <app-sidebar (toggle)="onSidebarToggle($event)"></app-sidebar>
+        <app-sidebar [open]="isSidebarOpen" (toggle)="onSidebarToggle($event)"></app-sidebar>
         <app-content-view></app-content-view>
     </div>
 </div>

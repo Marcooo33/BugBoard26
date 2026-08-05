@@ -99,3 +99,14 @@
     line-height: 1;
     font-weight: 400;
 }
+
+@media (max-width: 768px) {
+    :host {
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+    }
+
+    .component {
+        padding: 14px 14px;
+    }
+}

@@ -100,3 +100,26 @@
     font-size: 16px;
     line-height: 1;
 }
+
+@media (max-width: 768px) {
+    .filters__form {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .filters__label {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .form__filter select {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    .filters__reset-button {
+        width: 100%;
+        margin-left: 0;
+        justify-content: center;
+    }
+}

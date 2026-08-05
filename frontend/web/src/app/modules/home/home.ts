@@ -16,4 +16,8 @@ export class Home {
   onSidebarToggle(open:boolean){
     this.isSidebarOpen=open;
   }
+
+  onToggleSidebar(){
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 }

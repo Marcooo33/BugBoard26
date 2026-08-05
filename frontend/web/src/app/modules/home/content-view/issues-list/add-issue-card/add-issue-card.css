@@ -177,3 +177,24 @@
     outline: none;
     box-shadow: 0 0 0 3px rgba(147, 110, 229, 0.5);
 }
+
+@media (max-width: 768px) {
+    .add-issue-card-component {
+        padding: 20px 16px 16px;
+        margin: 20px 0;
+        gap: 16px;
+    }
+
+    .body__form {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form__field textarea {
+        min-height: 160px;
+    }
+
+    .component__footer {
+        padding-top: 12px;
+    }
+}

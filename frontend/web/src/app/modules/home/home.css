@@ -31,3 +31,22 @@ app-sidebar, app-content-view{
     height: 100%;
     min-height: 0%;
 }
+
+@media (max-width: 768px) {
+    .main-view {
+        grid-template-columns: 1fr;
+        position: relative;
+    }
+
+    .main-view:not(.closed)::after {
+        content: '';
+        position: fixed;
+        top: 58px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 58px);
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 89;
+        pointer-events: none;
+    }
+}

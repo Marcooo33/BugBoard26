@@ -130,3 +130,30 @@
     font-size: 0.9rem;
     margin-top: 48px;
 }
+
+@media (max-width: 768px) {
+    .component__header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 12px 12px;
+        gap: 10px;
+    }
+
+    .header__title {
+        font-size: 1.35rem;
+    }
+
+    .body__issues {
+        padding: 12px 12px;
+        gap: 8px;
+    }
+
+    .body__new-issue {
+        padding: 0 12px 12px;
+    }
+
+    .no-issues-label {
+        margin-top: 32px;
+        font-size: 0.82rem;
+    }
+}

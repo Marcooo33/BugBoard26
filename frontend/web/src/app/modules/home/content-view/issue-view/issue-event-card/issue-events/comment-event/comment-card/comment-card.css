@@ -37,3 +37,9 @@
     line-height: 1.7;
     word-break: break-word;
 }
+
+@media (max-width: 768px) {
+    .component {
+        padding: 12px 14px;
+    }
+}
