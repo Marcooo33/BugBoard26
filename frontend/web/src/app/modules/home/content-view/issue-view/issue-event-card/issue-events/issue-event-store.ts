@@ -44,17 +44,11 @@ export class IssueEventStore {
     );
   }
 
-  createComment(comment: Comment["text"]){
+  createComment(comment: Comment["text"]): Observable<Comment> {
     this._commentCreating.set(true);
-    this.api.createComment(comment).pipe(
+    return this.api.createComment(comment).pipe(
+      tap(() => this.api.issueEventsResource.reload()),
       finalize(() => this._commentCreating.set(false))
-    ).subscribe({
-      next: (createdComment: Comment) => {
-        this.api.issueEventsResource.reload();
-      },
-      error: (err: Error) => {
-        console.error('Error creating comment: ', err);
-      }
-    });
+    );
   }
 }

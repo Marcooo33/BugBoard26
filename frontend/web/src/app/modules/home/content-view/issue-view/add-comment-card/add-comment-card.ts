@@ -23,9 +23,15 @@ export class AddCommentCard {
   saveComment(){
     if(!this.commentForm.valid || this.isCreating){
       return
-    } else {
-      const comment: Comment["text"] = this.commentForm.get("comment")!.value!;
-      this.issueEventsStore.createComment(comment);   
     }
+    const comment: Comment["text"] = this.commentForm.get("comment")!.value!;
+    this.issueEventsStore.createComment(comment).subscribe({
+      next: () => {
+        this.commentForm.reset();
+      },
+      error: (err) => {
+        console.error('Errore durante l\'invio del commento:', err);
+      }
+    });
   }
 }
