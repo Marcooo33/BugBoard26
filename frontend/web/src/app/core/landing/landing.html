@@ -66,9 +66,26 @@
               #heroVideo
               src="/videos/overview.mp4"
               autoplay loop muted playsinline
+              (play)="isVideoPlaying = true"
+              (pause)="isVideoPlaying = false"
             ></video>
           </div>
         </div>
+
+        <button
+          type="button"
+          class="video-control desktop-only"
+          [class.paused]="!isVideoPlaying"
+          (click)="toggleVideo()"
+          [attr.aria-label]="isVideoPlaying ? 'Pausa video' : 'Riproduci video'"
+        >
+          <svg *ngIf="isVideoPlaying" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+          </svg>
+          <svg *ngIf="!isVideoPlaying" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
 
         <!-- VISIBILE SOLO SU MOBILE -->
         <img 
