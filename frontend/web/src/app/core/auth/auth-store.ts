@@ -1,4 +1,5 @@
 import { computed, inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { Observable, tap, catchError, throwError } from 'rxjs';
 import { Jwt } from './JWT/jwt';
 import { AuthApi } from './auth-api';
 import { JwtResponse } from './JWT/jwt-response';
@@ -64,21 +65,22 @@ export class AuthStore {
   }
 
 
-  login(email: string, password: string, returnUrl: string) {
+  login(email: string, password: string, returnUrl: string): Observable<JwtResponse> {
     if (!email || !password) {
       throw new Error('Email and password must be provided');
     }
-    this.authApi.login({ email, password }).subscribe({
-      next: (response: JwtResponse) => {
+    return this.authApi.login({ email, password }).pipe(
+      tap((response: JwtResponse) => {
         const jwt = new Jwt(response.token);
         this.setJwt(jwt);
         window.location.href = returnUrl || '/';
-      },
-      error: (err) => {
+      }),
+      catchError((err) => {
         console.error('Login failed', err);
         this.unsetJwt();
-      }
-    });
+        return throwError(() => err);
+      })
+    );
   }
 
   modifyUser(updates: IUserUpdate){

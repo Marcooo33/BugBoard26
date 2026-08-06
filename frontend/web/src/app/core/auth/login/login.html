@@ -16,10 +16,37 @@
       <div class="form-card">
         <h2>Accedi</h2>
 
-        <input type="email" formControlName="email" placeholder="Email" name="email">
-        <div [ngClass]=" isValidEmail ? 'inactive-warning' : 'active-warning'"> Inserire una email valida </div>
-        <input type="password" formControlName="password" placeholder="Password" name="password"/>
-        <div [ngClass]=" isValidPassword ? 'inactive-warning' : 'active-warning'"> Inserire la password corretta </div>
+        @if (loginError(); as error) {
+          <div id="login-alert" class="login-alert" role="alert" aria-live="polite" aria-atomic="true">
+            <span class="login-alert-icon" aria-hidden="true">&#9888;</span>
+            <span>{{ error }}</span>
+          </div>
+        }
+
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          name="email"
+          aria-label="Email"
+          [attr.aria-invalid]="isValidEmail === false || loginError() !== null"
+          [attr.aria-describedby]="loginError() ? 'email-warning login-alert' : 'email-warning'"
+          [ngClass]="{ 'input-invalid': isValidEmail === false || loginError() !== null }"
+        >
+        <div id="email-warning" [ngClass]=" isValidEmail ? 'inactive-warning' : 'active-warning'"> Inserire una email valida </div>
+
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          name="password"
+          aria-label="Password"
+          [attr.aria-invalid]="isValidPassword === false || loginError() !== null"
+          [attr.aria-describedby]="loginError() ? 'password-warning login-alert' : 'password-warning'"
+          [ngClass]="{ 'input-invalid': isValidPassword === false || loginError() !== null }"
+        />
+        <div id="password-warning" [ngClass]=" isValidPassword ? 'inactive-warning' : 'active-warning'"> Inserire la password corretta </div>
+
         <button type="submit">Login</button>
       </div>
     </form>

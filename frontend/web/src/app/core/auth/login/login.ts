@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -22,7 +22,13 @@ export class Login {
   isValidEmail: boolean = true;
   isValidPassword: boolean = true;
 
-  constructor() {}
+  loginError = signal<string | null>(null);
+
+  constructor() {
+    this.loginForm.valueChanges.subscribe(() => {
+      this.loginError.set(null);
+    });
+  }
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -30,12 +36,24 @@ export class Login {
   });
 
   onSubmit() {
-    if(this.loginForm.valid){
-      this.auth.login(
-        this.loginForm.controls.email.value!,
-        this.loginForm.controls.password.value!,
-        this.route.snapshot.queryParamMap.get('returnUrl') || '/'
-      );
+    this.loginError.set(null);
+
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      this.isValidEmail = this.loginForm.controls.email.valid;
+      this.isValidPassword = this.loginForm.controls.password.valid;
+      return;
     }
+
+    this.isValidEmail = true;
+    this.isValidPassword = true;
+
+    this.auth.login(
+      this.loginForm.controls.email.value!,
+      this.loginForm.controls.password.value!,
+      this.route.snapshot.queryParamMap.get('returnUrl') || '/'
+    ).subscribe({
+      error: () => this.loginError.set('Email o password errati. Riprova.')
+    });
   }
 }
