@@ -8,6 +8,8 @@ Project for the Software Engineering course at the University of Naples Federico
 ### Descrizione
 **BugBoard26** è una piattaforma di *issue handling* pensata per progetti software. Il sistema permette di coordinare team di sviluppo e segnalare bug in modo efficiente.
 
+[Visita BugBoard26 e prova la demo](https://Marcooo33.github.io/BugBoard26/).
+
 ### Funzionalità Principali
 * **Gestione delle Issue::** Segnalazione di varie tipologie di issue (Bug, Feature, Documentation, Question).
 * **Sezione Commenti:** Possibilità di interagire attivamente con le issue **commentandole** e **modificandone** le caratteristiche principali, come lo **stato** e la **priorità**. 
@@ -38,6 +40,8 @@ Per dettagli approfonditi sull'architettura, i diagrammi dei casi d'uso, il desi
 
 ### Description
 **BugBoard26** is an issue-handling platform designed for software projects. The system facilitates efficient development team coordination and streamlined bug reporting.
+
+[Visit BugBoard26 and try the demo](https://Marcooo33.github.io/BugBoard26/).
 
 ### Key Features
 * **Issue Management:** Report and track various issue types (Bug, Feature, Documentation,  Question).
