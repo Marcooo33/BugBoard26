@@ -4,7 +4,7 @@
 
         <div class="form__filter">
             <label class="filter__label" for="type">Tipo</label>
-            <select id="type" [field]="filtersForm.type">
+            <select id="type" [formField]="filtersForm.type">
                 <option value="">Tutti i tipi</option>
                 <option value="BUG">Bug</option>
                 <option value="FEATURE">Feature</option>
@@ -15,7 +15,7 @@
 
         <div class="form__filter">
             <label class="filter__label" for="priority">Priorità</label>
-            <select id="priority" [field]="filtersForm.priority">
+            <select id="priority" [formField]="filtersForm.priority">
                 <option value="">Tutte le priorità</option>
                 <option value="LOW">Low</option>
                 <option value="MEDIUM">Medium</option>
@@ -25,7 +25,7 @@
 
         <div class="form__filter">
             <label class="filter__label" for="state">Stato</label>
-            <select id="state" [field]="filtersForm.state">
+            <select id="state" [formField]="filtersForm.state">
                 <option value="">Tutti gli stati</option>
                 <option value="TODO">Todo</option>
                 <option value="PENDING">Pending</option>

@@ -103,9 +103,9 @@
 @media (max-width: 768px) {
     .sidebar {
         position: fixed;
-        top: 58px;
+        top: calc(58px + var(--demo-banner-height, 0px));
         left: 0;
-        height: calc(100vh - 58px);
+        height: calc(100dvh - 58px - var(--demo-banner-height, 0px));
         width: 260px;
         z-index: 90;
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);

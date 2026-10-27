@@ -386,12 +386,7 @@ export class DemoDataService {
   private events: Map<string, DemoIssueEvent[]> = new Map();
   private idCounter = 1000;
 
-  constructor() {
-    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('demo') === '1') {
-      this.seedData();
-      this.isActive.set(true);
-    }
-  }
+
 
   ensureSeeded(): void {
     if (this.projects.length === 0) {

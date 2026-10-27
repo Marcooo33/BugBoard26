@@ -1,3 +1,4 @@
+import { ENVIRONMENT_TOKEN } from '../../../../environments/environment-model';
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
@@ -15,6 +16,7 @@ import { AuthStore } from '../auth-store';
   styleUrl: './login.css',
 })
 export class Login {
+  readonly showcase = inject(ENVIRONMENT_TOKEN).showcase === true;
 
   private route = inject(ActivatedRoute);
   private auth = inject(AuthStore);
@@ -25,6 +27,7 @@ export class Login {
   loginError = signal<string | null>(null);
 
   constructor() {
+    if (this.showcase) this.loginForm.disable();
     this.loginForm.valueChanges.subscribe(() => {
       this.loginError.set(null);
     });
@@ -36,6 +39,7 @@ export class Login {
   });
 
   onSubmit() {
+    if (this.showcase) return;
     this.loginError.set(null);
 
     if (this.loginForm.invalid) {

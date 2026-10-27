@@ -32,11 +32,11 @@ export class IssueApi {
     return params;
   });
 
-  readonly issuesResource = httpResource<IIssue[]>(() => ({
+  readonly issuesResource = httpResource<IIssue[]>(() => this.authStore.isAuthenticated() && this.project.selectedProject() ? ({
     url: `${this.API_URL}${this.PROJECTS_URL}/${this.project.selectedProject()?.uuid}${this.ISSUES_URL}`,
     method: 'GET',
     params: { ...this.filters(), _v: this.authStore.resourceVersion().toString() },
-  }));
+  }) : undefined);
 
   createIssue(issue: INewIssue) {
     return this.http.post<IIssue>(

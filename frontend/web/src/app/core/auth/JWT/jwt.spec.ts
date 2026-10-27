@@ -1,7 +1,8 @@
 import { Jwt } from './jwt';
 
 describe('Jwt', () => {
-  it('should create an instance', () => {
-    expect(new Jwt()).toBeTruthy();
+  it('decodes the supplied token payload', () => {
+    const jwt = new Jwt(`${btoa('{"typ":"JWT"}')}.${btoa('{"sub":"test-user"}')}.signature`);
+    expect(jwt.payload().sub).toBe('test-user');
   });
 });

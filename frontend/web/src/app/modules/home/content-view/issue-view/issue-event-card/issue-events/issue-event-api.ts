@@ -24,11 +24,11 @@ export class IssueEventApi {
   private readonly COMMENT_URL = "/comment";
   private readonly CHANGE_URL = "/change";
 
-  readonly issueEventsResource = httpResource<TIssueEvent[]>(() => ({
+  readonly issueEventsResource = httpResource<TIssueEvent[]>(() => this.authStore.isAuthenticated() && this.projectStore.selectedProject() && this.issueStore.selectedIssue() ? ({
     url: `${this.API_URL}${this.PROJECTS_URL}/${this.projectStore.selectedProject()?.uuid}/${this.issueStore.selectedIssue()?.uuid}${this.ISSUE_EVENTS_URL}`,
     method: 'GET',
     params: { _v: this.authStore.resourceVersion().toString() },
-  }));
+  }) : undefined);
 
   sendChanges(change: any){
     return this.http.patch(

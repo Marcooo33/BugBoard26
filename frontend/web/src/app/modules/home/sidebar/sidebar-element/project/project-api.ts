@@ -18,11 +18,11 @@ export class ProjectApi {
   private readonly API_URL = this.env.urls.api;
   private readonly PROJECT_URL = "/projects"
 
-  readonly projectsResource = httpResource<Project[]>(() => ({
+  readonly projectsResource = httpResource<Project[]>(() => this.authStore.isAuthenticated() ? ({
     url: `${this.API_URL}${this.PROJECT_URL}`,
     method: 'GET',
     params: { _v: this.authStore.resourceVersion().toString() },
-  }));
+  }) : undefined);
 
   createProject(name: Project['name']) {
     return this.http.post<Project>(

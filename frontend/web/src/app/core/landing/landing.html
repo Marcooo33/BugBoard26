@@ -11,7 +11,11 @@
           <img src="images/Logotype.svg" alt="BugBoard26 Logo" class="nav-logo-img" />
         </div>
         <div class="nav-actions">
-          <a routerLink="/login" class="btn btn-outline">Accedi</a>
+          @if (showcase) {
+            <button type="button" class="btn btn-outline" disabled>Accedi</button>
+          } @else {
+            <a routerLink="/login" class="btn btn-outline">Accedi</a>
+          }
           <button type="button" class="btn btn-demo btn-demo-nav" (click)="goToDemo()">
             Prova la Demo
           </button>
@@ -32,7 +36,11 @@
 
       <div class="mobile-menu" [class.open]="isMenuOpen">
         <div class="mobile-menu-inner">
-          <a routerLink="/login" class="btn btn-outline" (click)="closeMenu()">Accedi</a>
+          @if (showcase) {
+            <button type="button" class="btn btn-outline" disabled>Accedi</button>
+          } @else {
+            <a routerLink="/login" class="btn btn-outline" (click)="closeMenu()">Accedi</a>
+          }
           <button type="button" class="btn btn-demo btn-demo-nav" (click)="goToDemo(); closeMenu()">
             Prova la Demo
           </button>
@@ -50,7 +58,11 @@
           Semplifica il tracciamento dei bug, gestisci il flusso di lavoro e ottimizza la collaborazione tra sviluppatori, designer e gestori di prodotto in un unico workspace ad alte prestazioni.
         </p>
         <div class="hero-cta-container">
-          <a routerLink="/login" class="btn btn-hero-outline">Accedi</a>
+          @if (showcase) {
+            <span class="showcase-access"><button type="button" class="btn btn-hero-outline" disabled>Accedi</button><span class="showcase-note">Accesso disponibile nella versione completa con backend.</span></span>
+          } @else {
+            <a routerLink="/login" class="btn btn-hero-outline">Accedi</a>
+          }
           <button type="button" class="btn btn-demo btn-demo-hero" (click)="goToDemo()">
             Prova la Demo
           </button>
@@ -64,7 +76,7 @@
           <div class="browser-frame__content">
             <video
               #heroVideo
-              src="/videos/overview.mp4"
+              src="videos/overview.mp4"
               autoplay loop muted playsinline
               (play)="isVideoPlaying = true"
               (pause)="isVideoPlaying = false"
@@ -88,11 +100,11 @@
         </button>
 
         <!-- VISIBILE SOLO SU MOBILE -->
-        <img 
-          src="/images/overview-mobile.png" 
-          alt="Anteprima BugBoard26 su Mobile" 
-          class="mobile-only preview-image" 
-          width="519" 
+        <img
+          src="images/overview-mobile.png"
+          alt="Anteprima BugBoard26 su Mobile"
+          class="mobile-only preview-image"
+          width="519"
           height="1012"
         />
       </div>

@@ -20,6 +20,7 @@ export const routes: Routes = [
         path: 'demo',
         component: DemoContainer,
         canActivate: [demoGuard],
+        canDeactivate: [(component: DemoContainer) => component.leaveDemo()],
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: Home },

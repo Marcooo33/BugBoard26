@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { ENVIRONMENT_TOKEN } from '../../../environments/environment-model';
 import { DemoDataService } from './demo-data.service';
 
 function safeParseSegments(url: string): string[] {
@@ -19,6 +20,12 @@ function safeParseSegments(url: string): string[] {
 
 export const demoInterceptor: HttpInterceptorFn = (req, next) => {
   const demo = inject(DemoDataService);
+
+  const showcase = inject(ENVIRONMENT_TOKEN).showcase;
+  const isApi = req.url.includes('/api/');
+  if (showcase && isApi && (!demo.isActive() || /\/api\/auth(?:\/|$)/.test(req.url))) {
+    return notFound();
+  }
 
   if (
     !demo.isActive() ||

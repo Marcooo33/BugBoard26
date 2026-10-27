@@ -1,0 +1,51 @@
+name: Publish frontend to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/web/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/web/package-lock.json
+      - run: npm ci
+        working-directory: frontend/web
+      - run: npm test -- --watch=false --include=src/app/core/auth/auth-store.spec.ts --include=src/app/core/auth/JWT/jwt.spec.ts --include=src/app/core/demo/demo.interceptor.spec.ts
+        working-directory: frontend/web
+      - run: npm run build:showcase
+        working-directory: frontend/web
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/web/dist/BugBoard26/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

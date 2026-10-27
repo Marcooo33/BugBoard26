@@ -28,11 +28,7 @@ export const demoGuard: CanActivateFn = () => {
 
   demoData.ensureSeeded();
   demoData.isActive.set(true);
-  sessionStorage.setItem('demo', '1');
-
-  if (!authStore.isAuthenticated()) {
-    authStore.setJwt(new Jwt(DEMO_JWT_TOKEN));
-  }
+  authStore.startDemo(new Jwt(DEMO_JWT_TOKEN));
 
   return true;
 };

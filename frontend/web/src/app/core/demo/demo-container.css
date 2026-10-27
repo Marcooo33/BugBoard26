@@ -1,3 +1,4 @@
+:host { --demo-banner-height: 40px; }
 .demo-banner {
   position: fixed;
   top: 0;
@@ -101,4 +102,12 @@
 
 .demo-content {
   padding-top: 40px;
+}
+
+@media (max-width: 600px) {
+  :host { --demo-banner-height: 88px; }
+  .demo-banner { height: 88px; flex-wrap: wrap; padding: 8px 12px; gap: 6px; }
+  .demo-banner__label { white-space: normal; flex: 1; }
+  .demo-banner__actions { width: 100%; justify-content: flex-end; }
+  .demo-content { padding-top: 88px; }
 }

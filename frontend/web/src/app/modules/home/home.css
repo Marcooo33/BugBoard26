@@ -1,6 +1,6 @@
 :host{
     display: block;
-    height: 100vh;
+    height: calc(100dvh - var(--demo-banner-height, 0px));
     overflow: hidden;
 }
 
@@ -41,10 +41,10 @@ app-sidebar, app-content-view{
     .main-view:not(.closed)::after {
         content: '';
         position: fixed;
-        top: 58px;
+        top: calc(58px + var(--demo-banner-height, 0px));
         left: 0;
         width: 100%;
-        height: calc(100vh - 58px);
+        height: calc(100dvh - 58px - var(--demo-banner-height, 0px));
         background: rgba(0, 0, 0, 0.5);
         z-index: 89;
         pointer-events: none;

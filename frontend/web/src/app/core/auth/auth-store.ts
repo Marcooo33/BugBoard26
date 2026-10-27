@@ -2,6 +2,8 @@ import { computed, inject, Injectable, signal, Signal, WritableSignal } from '@a
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { Jwt } from './JWT/jwt';
 import { AuthApi } from './auth-api';
+import { Router } from '@angular/router';
+import { ENVIRONMENT_TOKEN } from '../../../environments/environment-model';
 import { JwtResponse } from './JWT/jwt-response';
 import { IUserUpdate, TUserRole } from '../../modules/profile/user/user';
 
@@ -11,9 +13,13 @@ import { IUserUpdate, TUserRole } from '../../modules/profile/user/user';
 export class AuthStore {
 
   private readonly authApi = inject(AuthApi);
+  private readonly router = inject(Router);
+  private readonly environment = inject(ENVIRONMENT_TOKEN);
+  private readonly demoJwt = signal<Jwt | null>(null);
+  readonly isDemo = computed(() => this.demoJwt() !== null);
 
   private readonly _jwt: WritableSignal<Jwt | null> = signal(null);
-  readonly jwt = this._jwt.asReadonly();
+  readonly jwt = computed(() => this.demoJwt() ?? this._jwt());
 
   readonly resourceVersion = signal(0);
 
@@ -35,9 +41,33 @@ export class AuthStore {
 
   loadTokenFromStorage() {
     const token = localStorage.getItem('auth');
-    this._jwt.set(token ? new Jwt(token) : null);
+    // Migrate tokens persisted by older demo versions; preserve real sessions.
+    let realToken = token;
+    if (token) {
+      try {
+        if (new Jwt(token).payload().sub === 'u-demo') {
+          localStorage.removeItem('auth');
+          realToken = null;
+        }
+      } catch {
+        localStorage.removeItem('auth');
+        realToken = null;
+      }
+    }
+    sessionStorage.removeItem('demo');
+    this._jwt.set(!this.environment.showcase && realToken ? new Jwt(realToken) : null);
   }
   
+  startDemo(token: Jwt) {
+    this.demoJwt.set(token);
+    this.resourceVersion.update(v => v + 1);
+  }
+
+  endDemo() {
+    this.demoJwt.set(null);
+    this.resourceVersion.update(v => v + 1);
+  }
+
   setJwt(token: Jwt) {
     this.saveTokenToStorage(token);
     this._jwt.set(token);
@@ -51,9 +81,12 @@ export class AuthStore {
   }
 
   logout() {
-    sessionStorage.removeItem('demo');
-    localStorage.removeItem('auth');
-    window.location.href = '/';
+    if (this.isDemo()) {
+      void this.router.navigate(['/']);
+      return;
+    }
+    this.unsetJwt();
+    void this.router.navigate(['/']);
   }
 
   private saveTokenToStorage(token: Jwt) {
@@ -66,6 +99,9 @@ export class AuthStore {
 
 
   login(email: string, password: string, returnUrl: string): Observable<JwtResponse> {
+    if (this.environment.showcase) {
+      return throwError(() => new Error('Accesso non disponibile nella vetrina pubblica'));
+    }
     if (!email || !password) {
       throw new Error('Email and password must be provided');
     }

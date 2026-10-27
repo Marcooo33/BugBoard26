@@ -1,3 +1,4 @@
+import { ENVIRONMENT_TOKEN } from '../../../environments/environment-model';
 import { AfterViewInit, Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -10,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './landing.scss'
 })
 export class Landing implements AfterViewInit {
+  readonly showcase = inject(ENVIRONMENT_TOKEN).showcase === true;
   private readonly router = inject(Router);
 
   @ViewChild('heroVideo') heroVideo!: ElementRef<HTMLVideoElement>;
